@@ -1,0 +1,10 @@
+IF TU-404 < 200 NTU FOR 30 s THEN ClearWortReady := TRUE
+
+IF LT-401 < 60% THEN
+    Close V-403
+ELSIF LT-401 > 80% THEN
+    Close V-403
+ELSE
+    Open V-403
+END_IF
+
