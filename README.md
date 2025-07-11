@@ -16,3 +16,5 @@ The base models are available at:
 Due to the large size of fine-tuned models (each >100GB), we do not include them directly.  
 However, we provide all training scripts, configurations, and inference instructions.  
 Fine-tuned checkpoints can be made available upon acceptance or request.
+
+Code and dataset available at: https://anonymous.4open.science/r/AAAI2026-D5ED/
