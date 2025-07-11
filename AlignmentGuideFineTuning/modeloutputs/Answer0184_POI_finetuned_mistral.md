@@ -1,0 +1,118 @@
+### Intent:
+**Intent Summary:**  
+Create an IEC 61131-3-compliant ASCII art function block diagram (FBD) showing signal flow between an analog input, timer, PID controller, and analog output, with labeled I/O parameters for each block.  
+
+*(Focused on the core task: text-based FBD visualization with specific blocks and signal connections.)*
+
+### Prompt:
+**FBD PID:**
+
+Create a 61131-3 function block diagram in ASCII art. It shall contain an analog input, a timer block, and a PID block as well as an analog output. The analog input feeds both the timer and the PID block. Only the PID block is connected to the analog output. Provide typical input and output signals for each function block and show them inside each block.
+
+**B-A-B:**
+
+🟥 B (Before) – The Problem or Challenge
+
+Designing and visualizing function block diagrams (FBD) in IEC 61131-3 can be difficult in plain-text environments without access to graphical editors. This becomes especially limiting when trying to convey the interaction between key blocks such as analog inputs, PID controllers, and timers—particularly when communicating signal flow, I/O parameters, and control logic during early-stage design or documentation reviews.
+
+⸻
+
+🟩 A (After) – The Desired Outcome
+
+Create a 61131-3-compliant FBD layout using ASCII art that includes the following components:
+	•	An analog input block
+	•	A timer block
+	•	A PID block
+	•	An analog output block
+
+Ensure the analog input feeds both the timer and the PID block, and that only the PID output connects to the analog output. Clearly show typical input and output signal names within each block (e.g., IN, OUT, PV, SP, CV, ET, etc.), using a readable, text-based diagram format.
+
+⸻
+
+🟧 B (Bridge) – How to Get There
+	1.	Use ASCII characters to draw blocks (e.g., +----+) and wires (---->).
+	2.	Label each block clearly:
+	•	Analog Input with output AI_Value
+	•	TON Timer with IN, ET, and Q
+	•	PID Block with PV, SP, and CV
+	•	Analog Output driven by CV
+	3.	Show connections such as:
+	•	AI_Value → TON.IN
+	•	AI_Value → PID.PV
+	•	PID.CV → Analog Output.IN
+	4.	Place signal names inside or beside each block for clarity.
+	5.	Make sure the diagram is compact and easy to understand in a code editor or documentation file.
+
+### Generated Code:
+**Intent Summary:**  
+Create an IEC 61131-3-compliant ASCII art function block diagram (FBD) showing signal flow between an analog input, timer, PID controller, and analog output, with labeled I/O parameters for each block.  
+
+*(Focused on the core task: text-based FBD visualization with specific blocks and signal connections.)*
+**FBD PID:**
+
+Create a 61131-3 function block diagram in ASCII art. It shall contain an analog input, a timer block, and a PID block as well as an analog output. The analog input feeds both the timer and the PID block. Only the PID block is connected to the analog output. Provide typical input and output signals for each function block and show them inside each block.
+
+**B-A-B:**
+
+🟥 B (Before) – The Problem or Challenge
+
+Designing and visualizing function block diagrams (FBD) in IEC 61131-3 can be difficult in plain-text environments without access to graphical editors. This becomes especially limiting when trying to convey the interaction between key blocks such as analog inputs, PID controllers, and timers—particularly when communicating signal flow, I/O parameters, and control logic during early-stage design or documentation reviews.
+
+⸻
+
+🟩 A (After) – The Desired Outcome
+
+Create a 61131-3-compliant FBD layout using ASCII art that includes the following components:
+	•	An analog input block
+	•	A timer block
+	•	A PID block
+	•	An analog output block
+
+Ensure the analog input feeds both the timer and the PID block, and that only the PID output connects to the analog output. Clearly show typical input and output signal names within each block (e.g., IN, OUT, PV, SP, CV, ET, etc.), using a readable, text-based diagram format.
+
+⸻
+
+🟧 B (Bridge) – How to Get There
+	1.	Use ASCII characters to draw blocks (e.g., +----+) and wires (---->).
+	2.	Label each block clearly:
+	•	Analog Input with output AI_Value
+	•	TON Timer with IN, ET, and Q
+	•	PID Block with PV, SP, and CV
+	•	Analog Output driven by CV
+	3.	Show connections such as:
+	•	AI_Value → TON.IN
+	•	AI_Value → PID.PV
+	•	PID.CV → Analog Output.IN
+	4.	Place signal names inside or beside each block for clarity.
+	5.	Make sure the diagram is compact and easy to understand in a code editor or documentation file.
+(* IEC 61131-3 Structured Text function block for a PID controller *)
+(* Implements proportional, integral, and derivative control with configurable parameters *)
+(* Uses floating-point arithmetic for real-time performance *)
+(* Inputs: PV (process variable), SP (setpoint), Kp (proportional gain), Ki (integral gain), Kd (derivative gain) *)
+(* Outputs: Output (control signal), Error (difference between PV and SP), Integral (accumulated error), Derivative (rate of change) *)
+(* Configurable: SampleTime (seconds), MinOutput (minimum control signal), MaxOutput (maximum control signal) *)
+(* Safety: Clamps output to MinOutput and MaxOutput to prevent actuator overload *)
+
+FUNCTION_BLOCK PIDController
+VAR_INPUT
+    PV : REAL;                      (* Process variable input, e.g., temperature or pressure *)
+    SP : REAL;                      (* Setpoint input, e.g., target temperature or pressure *)
+    Kp : REAL;                      (* Proportional gain, e.g., 1.0 *)
+    Ki : REAL;                      (* Integral gain, e.g., 0.01 *)
+    Kd : REAL;                      (* Derivative gain, e.g., 0.1 *)
+    SampleTime : REAL;              (* Sample time in seconds, e.g., 0.1 *)
+    MinOutput : REAL;               (* Minimum output signal, e.g., 0.0 *)
+    MaxOutput : REAL;               (* Maximum output signal, e.g., 100.0 *)
+END_VAR
+
+VAR_OUTPUT
+    Output : REAL;                  (* Control signal output to actuator *)
+    Error : REAL;                   (* Difference between PV and SP *)
+    Integral : REAL;                (* Accumulated error *)
+    Derivative : REAL;              (* Rate of change *)
+END_VAR
+
+VAR
+    PrevPV : REAL;                   (* Previous PV for derivative calculation *)
+    PrevError : REAL;                (* Previous error for integral calculation *)
+    Last

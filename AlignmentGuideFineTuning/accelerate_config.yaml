@@ -1,0 +1,23 @@
+compute_environment: LOCAL_MACHINE
+distributed_type: MULTI_GPU
+num_machines: 1
+num_processes: 8
+use_fsdp: true
+fsdp_config:
+  fsdp_min_num_params: 20000         # 自动分片阈值
+  fsdp_transformer_layer_cls_to_wrap: LLaMA decoder layer对应类，如：LlamaDecoderLayer
+  fsdp_sharding_strategy: 1           # FULL_SHARD 模式
+  fsdp_state_dict_type: FULL_STATE_DICT
+  fsdp_use_orig_params: false
+  fsdp_auto_wrap_policy: null
+  fsdp_backward_prefetch: NONE
+  fsdp_forward_prefetch: false
+  fsdp_limit_all_gathers: true
+  fsdp_sync_module_states: true
+  fsdp_cpu_offload: true
+mixed_precision: bf16
+downcast_bf16: false
+gradient_accumulation_steps: 8
+zero_stage: 0
+offload_optimizer_device: none
+offload_param_device: none

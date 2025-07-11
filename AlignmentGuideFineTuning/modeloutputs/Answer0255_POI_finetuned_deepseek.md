@@ -1,0 +1,136 @@
+### Intent:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program to monitor and enforce emergency shutdowns for a subsea gas wellhead based on pressure (>1500 psi), temperature (>120°C), and flow rate (<10 L/min) thresholds, ensuring manual reset after shutdowns for safety compliance.
+
+### Prompt:
+**Interlock Gas Wellhead:**
+
+Develop a self-contained IEC 61131-3 Structured Text program to implement emergency interlocks for a subsea gas wellhead. The program should monitor critical parameters such as wellhead pressure, temperature, and flow rates using pressure transmitters (PT), temperature transmitters (TT), and flow meters (FT). The interlock system should immediately trigger emergency shutdown procedures if any of these parameters exceed predefined safety limits.
+
+The program should include logic for closing the master valve (MV-101) if wellhead pressure exceeds 1500 psi, or if flow rate drops below the minimum threshold, indicating a potential leak. Additionally, integrate temperature monitoring to shut down the system if the temperature exceeds 120°C. Incorporate safety features such as automatic reset prevention, ensuring that manual intervention is required to restart the system after an emergency shutdown.
+
+Discuss the critical role of emergency interlocks in subsea gas wellhead operations, particularly in preventing catastrophic failures due to pressure, temperature, or flow anomalies.
+
+**C-A-R-E:**
+
+🟥 C (Context) – The Background
+
+Subsea gas wellheads are critical infrastructure components in offshore oil and gas operations, exposed to extreme conditions and limited physical access. Any delay in responding to abnormal pressure, temperature, or flow conditions can lead to catastrophic failures, such as blowouts, gas leaks, or equipment damage. Emergency interlocks play a vital role in ensuring that safety responses are automated, immediate, and robust—even in fully unmanned environments.
+
+⸻
+
+🟩 A (Action) – The Implementation Task
+
+Develop a self-contained IEC 61131-3 Structured Text (ST) program to implement an emergency interlock system for a subsea gas wellhead. The program should:
+	•	Monitor key process variables:
+	•	Pressure via PT sensors
+	•	Temperature via TT sensors
+	•	Flow rate via FT sensors
+	•	Trigger safety actions based on the following conditions:
+	•	If pressure > 1500 psi, close the master valve (MV-101)
+	•	If flow rate drops below minimum, also close MV-101 (to prevent leaks)
+	•	If temperature > 120°C, trigger full shutdown
+	•	Prevent automatic restart: Implement a manual reset mechanism that requires operator intervention to re-enable the system after an emergency shutdown.
+
+⸻
+
+🟨 R (Result) – The Expected Outcome
+
+The interlock system provides a deterministic and reliable protection mechanism that instantly reacts to abnormal conditions and ensures that the system enters a safe state. It minimizes the risk of catastrophic events and increases confidence in unmanned or remote operations. By requiring manual resets after shutdown, it ensures issues are reviewed and resolved before restarting, enhancing long-term operational integrity.
+
+⸻
+
+🟦 E (Example) – A Practical Use Case
+
+In the event that PT_101 detects pressure exceeding 1500 psi, the system immediately sets MV_101 := FALSE (closing the valve), sets a SHUTDOWN := TRUE flag, and locks out the restart logic. If FT_101 reports near-zero flow, this might indicate a rupture or leakage—also triggering MV_101 := FALSE. Likewise, if TT_101 > 120°C, the system engages a full shutdown to protect downstream equipment.
+
+A manual reset input, such as RESET := TRUE, must be activated by maintenance personnel after inspection to re-enable the system.
+
+### Generated Code:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program to monitor and enforce emergency shutdowns for a subsea gas wellhead based on pressure (>1500 psi), temperature (>120°C), and flow rate (<10 L/min) thresholds, ensuring manual reset after shutdowns for safety compliance.
+**Interlock Gas Wellhead:**
+
+Develop a self-contained IEC 61131-3 Structured Text program to implement emergency interlocks for a subsea gas wellhead. The program should monitor critical parameters such as wellhead pressure, temperature, and flow rates using pressure transmitters (PT), temperature transmitters (TT), and flow meters (FT). The interlock system should immediately trigger emergency shutdown procedures if any of these parameters exceed predefined safety limits.
+
+The program should include logic for closing the master valve (MV-101) if wellhead pressure exceeds 1500 psi, or if flow rate drops below the minimum threshold, indicating a potential leak. Additionally, integrate temperature monitoring to shut down the system if the temperature exceeds 120°C. Incorporate safety features such as automatic reset prevention, ensuring that manual intervention is required to restart the system after an emergency shutdown.
+
+Discuss the critical role of emergency interlocks in subsea gas wellhead operations, particularly in preventing catastrophic failures due to pressure, temperature, or flow anomalies.
+
+**C-A-R-E:**
+
+🟥 C (Context) – The Background
+
+Subsea gas wellheads are critical infrastructure components in offshore oil and gas operations, exposed to extreme conditions and limited physical access. Any delay in responding to abnormal pressure, temperature, or flow conditions can lead to catastrophic failures, such as blowouts, gas leaks, or equipment damage. Emergency interlocks play a vital role in ensuring that safety responses are automated, immediate, and robust—even in fully unmanned environments.
+
+⸻
+
+🟩 A (Action) – The Implementation Task
+
+Develop a self-contained IEC 61131-3 Structured Text (ST) program to implement an emergency interlock system for a subsea gas wellhead. The program should:
+	•	Monitor key process variables:
+	•	Pressure via PT sensors
+	•	Temperature via TT sensors
+	•	Flow rate via FT sensors
+	•	Trigger safety actions based on the following conditions:
+	•	If pressure > 1500 psi, close the master valve (MV-101)
+	•	If flow rate drops below minimum, also close MV-101 (to prevent leaks)
+	•	If temperature > 120°C, trigger full shutdown
+	•	Prevent automatic restart: Implement a manual reset mechanism that requires operator intervention to re-enable the system after an emergency shutdown.
+
+⸻
+
+🟨 R (Result) – The Expected Outcome
+
+The interlock system provides a deterministic and reliable protection mechanism that instantly reacts to abnormal conditions and ensures that the system enters a safe state. It minimizes the risk of catastrophic events and increases confidence in unmanned or remote operations. By requiring manual resets after shutdown, it ensures issues are reviewed and resolved before restarting, enhancing long-term operational integrity.
+
+⸻
+
+🟦 E (Example) – A Practical Use Case
+
+In the event that PT_101 detects pressure exceeding 1500 psi, the system immediately sets MV_101 := FALSE (closing the valve), sets a SHUTDOWN := TRUE flag, and locks out the restart logic. If FT_101 reports near-zero flow, this might indicate a rupture or leakage—also triggering MV_101 := FALSE. Likewise, if TT_101 > 120°C, the system engages a full shutdown to protect downstream equipment.
+
+A manual reset input, such as RESET := TRUE, must be activated by maintenance personnel after inspection to re-enable the system. This ensures that any issues are addressed before the system is restarted.
+(* IEC 61131-3 Structured Text Program: Emergency Interlock Gas Wellhead *)
+(* Purpose: Monitors and shuts down subsea gas wellhead under abnormal conditions *)
+
+PROGRAM GasWellheadInterlock
+VAR
+    (* Inputs *)
+    PT_101 : REAL;         (* Pressure sensor, 0 to 1500 psi *)
+    TT_101 : REAL;         (* Temperature sensor, 0 to 120°C *)
+    FT_101 : REAL;         (* Flow rate sensor, 0 to 10 L/min *)
+    RESET : BOOL;          (* Manual reset input *)
+
+    (* Outputs *)
+    MV_101 : BOOL;         (* Master valve: TRUE = closed, FALSE = open *)
+    SHUTDOWN : BOOL;       (* Shutdown flag: TRUE = system in shutdown state *)
+    ERROR : BOOL;          (* Error flag: TRUE = abnormal condition detected *)
+
+    (* Internal Variables *)
+    MinFlow : REAL := 0.0; (* Minimum flow rate threshold *)
+    MaxPressure : REAL := 1500.0; (* Maximum pressure threshold *)
+    MaxTemp : REAL := 120.0; (* Maximum temperature threshold *)
+END_VAR
+
+(* Logic: Emergency Interlock *)
+IF PT_101 > MaxPressure OR TT_101 > MaxTemp OR FT_101 < MinFlow THEN
+    MV_101 := FALSE; (* Close the master valve *)
+    SHUTDOWN := TRUE; (* Enter shutdown state *)
+    ERROR := TRUE;    (* Set error flag *)
+ELSE
+    MV_101 := NOT MV_101; (* Reset MV_101 to its previous state *)
+    SHUTDOWN := FALSE; (* Reset shutdown flag *)
+    ERROR := FALSE;    (* Reset error flag *)
+END_IF
+
+(* Manual Reset *)
+IF RESET THEN
+    MV_101 := FALSE; (* Reset MV_101 to its previous state *)
+    SHUTDOWN := FALSE; (* Reset shutdown flag *)
+    ERROR := FALSE;    (* Reset error flag *)
+END_IF
+
+(* Safety Feature: Prevent Automatic Restart *)
+IF SHUTDOWN THEN
+    MV_

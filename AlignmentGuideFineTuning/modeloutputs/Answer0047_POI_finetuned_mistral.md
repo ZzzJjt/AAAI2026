@@ -1,0 +1,142 @@
+### Intent:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program to automatically open a pressure relief valve when vessel pressure exceeds a safe limit, maintain it open until pressure normalizes, and incorporate fail-safe diagnostics for sensor/valve faults to ensure process safety.
+
+### Prompt:
+**Interlock Pressure Relief:**
+
+Develop a self-contained IEC 61131-3 Structured Text program to implement an interlock system for opening a pressure relief valve in a vessel upon detecting overpressure. The program should monitor the vessel pressure using a pressure sensor and trigger the opening of the relief valve when the pressure exceeds a predefined safe limit.
+
+The logic should ensure that the pressure relief valve remains open until the vessel pressure drops below a safe threshold. Additionally, incorporate safety checks to account for sensor failures or valve malfunctions, ensuring that the system defaults to a safe state in the event of a fault. Discuss the significance of pressure relief systems in protecting industrial processes from overpressure hazards and ensuring operational safety.
+
+
+**B-A-B:**
+
+🟥 B (Before) – The Challenge
+
+Industrial vessels often operate under high pressure, and without adequate protection, overpressure conditions can lead to catastrophic equipment damage, explosions, or safety incidents. Relying solely on manual pressure monitoring or mechanical relief without system logic leaves the process vulnerable to failure, especially in the event of sensor errors or valve faults.
+
+⸻
+
+🟩 A (After) – The Ideal Outcome
+
+Develop a self-contained IEC 61131-3 Structured Text program that monitors vessel pressure using a pressure sensor and automatically opens a pressure relief valve when a predefined safe pressure limit is exceeded. The program should:
+	•	Trigger the relief valve when pressure rises above the high-pressure threshold (e.g., 15 bar)
+	•	Keep the valve open until the pressure drops below a reset threshold (e.g., 12 bar)
+	•	Include safety diagnostics, ensuring that:
+	•	If the pressure sensor fails (e.g., stuck or invalid reading), the system assumes overpressure and opens the valve
+	•	If the valve fails to respond, the system logs a fault and triggers an alarm or backup safety action
+	•	Fail safely by defaulting to a conservative response (e.g., valve open) when any part of the interlock logic becomes unreliable
+ 
+🟧 B (Bridge) – The Implementation Strategy
+
+To implement this:
+	1.	Monitor the pressure input (PT_101) continuously
+	2.	Use structured logic like:
+IF PT_101 > HIGH_LIMIT THEN
+    RELIEF_VALVE := TRUE;
+    RELIEF_LATCH := TRUE;
+END_IF;
+
+IF RELIEF_LATCH AND PT_101 < RESET_LIMIT THEN
+    RELIEF_LATCH := FALSE;
+    RELIEF_VALVE := FALSE;
+END_IF;
+
+IF SensorFault OR ValveFault THEN
+    RELIEF_VALVE := TRUE; // Fail-safe condition
+END_IF;
+  3.	Comment the code for maintainability, and ensure the relief logic operates independently from normal process controls to maintain integrity.
+
+Finally, explain that automated pressure relief interlocks are a cornerstone of process safety, reducing human error, preventing vessel rupture, and enabling safe pressure regulation in sectors such as petrochemical, pharmaceutical, and energy.
+
+### Generated Code:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program to automatically open a pressure relief valve when vessel pressure exceeds a safe limit, maintain it open until pressure normalizes, and incorporate fail-safe diagnostics for sensor/valve faults to ensure process safety.
+**Interlock Pressure Relief:**
+
+Develop a self-contained IEC 61131-3 Structured Text program to implement an interlock system for opening a pressure relief valve in a vessel upon detecting overpressure. The program should monitor the vessel pressure using a pressure sensor and trigger the opening of the relief valve when the pressure exceeds a predefined safe limit.
+
+The logic should ensure that the pressure relief valve remains open until the vessel pressure drops below a safe threshold. Additionally, incorporate safety checks to account for sensor failures or valve malfunctions, ensuring that the system defaults to a safe state in the event of a fault. Discuss the significance of pressure relief systems in protecting industrial processes from overpressure hazards and ensuring operational safety.
+
+
+**B-A-B:**
+
+🟥 B (Before) – The Challenge
+
+Industrial vessels often operate under high pressure, and without adequate protection, overpressure conditions can lead to catastrophic equipment damage, explosions, or safety incidents. Relying solely on manual pressure monitoring or mechanical relief without system logic leaves the process vulnerable to failure, especially in the event of sensor errors or valve faults.
+
+⸻
+
+🟩 A (After) – The Ideal Outcome
+
+Develop a self-contained IEC 61131-3 Structured Text program that monitors vessel pressure using a pressure sensor and automatically opens a pressure relief valve when a predefined safe pressure limit is exceeded. The program should:
+	•	Trigger the relief valve when pressure rises above the high-pressure threshold (e.g., 15 bar)
+	•	Keep the valve open until the pressure drops below a reset threshold (e.g., 12 bar)
+	•	Include safety diagnostics, ensuring that:
+	•	If the pressure sensor fails (e.g., stuck or invalid reading), the system assumes overpressure and opens the valve
+	•	If the valve fails to respond, the system logs a fault and triggers an alarm or backup safety action
+	•	Fail safely by defaulting to a conservative response (e.g., valve open) when any part of the interlock logic becomes unreliable
+ 
+🟧 B (Bridge) – The Implementation Strategy
+
+To implement this:
+	1.	Monitor the pressure input (PT_101) continuously
+	2.	Use structured logic like:
+IF PT_101 > HIGH_LIMIT THEN
+    RELIEF_VALVE := TRUE;
+    RELIEF_LATCH := TRUE;
+END_IF;
+
+IF RELIEF_LATCH AND PT_101 < RESET_LIMIT THEN
+    RELIEF_LATCH := FALSE;
+    RELIEF_VALVE := FALSE;
+END_IF;
+
+IF SensorFault OR ValveFault THEN
+    RELIEF_VALVE := TRUE; // Fail-safe condition
+END_IF;
+  3.	Comment the code for maintainability, and ensure the relief logic operates independently from normal process controls to maintain integrity.
+
+Finally, explain that automated pressure relief interlocks are a cornerstone of process safety, reducing human error, preventing vessel rupture, and enabling safe pressure regulation in sectors such as petrochemical, pharmaceutical, and energy.
+(* Program: Pressure Relief Interlock *)
+(* Version: 1.0, Date: 2025-05-21 *)
+(* Monitors vessel pressure and opens relief valve on overpressure *)
+(* Uses IEC 61131-3 Structured Text, follows safety standards *)
+
+PROGRAM PRG_PressureReliefInterlock
+VAR
+    (* Inputs *)
+    PT_101 : REAL;                    (* Pressure sensor, bar *)
+    SensorFault : BOOL;               (* Sensor failure flag *)
+    ValveFault : BOOL;                (* Valve failure flag *)
+    
+    (* Outputs *)
+    RELIEF_VALVE : BOOL;              (* Relief valve control, TRUE = Open *)
+    RELIEF_LATCH : BOOL;              (* Latch to maintain valve open *)
+    ALARM_HighPressure : BOOL;        (* High pressure alarm *)
+    ALARM_SensorFault : BOOL;         (* Sensor fault alarm *)
+    ALARM_ValveFault : BOOL;          (* Valve fault alarm *)
+    
+    (* Internal Variables *)
+    HIGH_LIMIT : REAL := 15.0;        (* High pressure limit, bar *)
+    RESET_LIMIT : REAL := 12.0;       (* Reset pressure limit, bar *)
+    RELIEF_VALVE_INIT : BOOL := FALSE; (* Initial valve state *)
+    
+    (* States *)
+    State : INT := 0;                 (* 0=Idle, 1=High Pressure, 2=Reset *)
+    LastState : INT := 0;             (* For debouncing *)
+    
+    (* Timers *)
+    T_Debounce : TON;                 (* Debounce timer, ms *)
+    T_Debounce#PID := (0, 1000);      (* 1s debounce *)
+    
+    (* Flags *)
+    DebounceActive : BOOL;            (* Debounce flag *)
+END_VAR
+
+(* Main Logic *)
+(* Initialize *)
+RELIEF_VALVE_INIT := RELIEF_VALVE;
+
+(* Main State Machine

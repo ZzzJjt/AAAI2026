@@ -1,0 +1,122 @@
+### Intent:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program to enforce safety door interlocks on a chemical reactor, ensuring it only operates when all doors are securely closed and triggering emergency shutdowns if breached, to protect personnel and comply with safety standards.  
+
+*(Focus: Safety-critical interlock logic for reactor access control.)*
+
+### Prompt:
+**Interlock Safety Doors:**
+
+Develop a self-contained IEC 61131-3 Structured Text program to implement interlocks for safety doors in a chemical reactor. The program should monitor the status of the safety doors and ensure that the reactor remains in a safe state whenever any door is open.
+
+The interlock logic should prevent the reactor from starting or continuing operation if any safety door is not securely closed. Additionally, if a safety door is opened during reactor operation, the program should immediately trigger an emergency shutdown sequence, including deactivating the reactor and stopping any hazardous processes.
+
+This interlock ensures that the reactor only operates when all safety doors are securely closed, providing an essential safeguard against accidental exposure to hazardous conditions. Discuss the importance of safety door interlocks in preventing operator access to dangerous environments and ensuring compliance with safety standards in chemical processing.
+
+**T-A-G:**
+
+🟥 T (Task) – What You Need to Do
+
+Develop a Structured Text (IEC 61131-3) program to implement an interlock system for safety doors on a chemical reactor.
+
+⸻
+
+🟩 A (Action) – How to Do It
+	1.	Monitor all safety doors using digital inputs (e.g., DOOR_1_CLOSED, DOOR_2_CLOSED, etc.).
+	2.	Prevent reactor startup if any door is open:
+ALLOW_START := DOOR_1_CLOSED AND DOOR_2_CLOSED AND DOOR_3_CLOSED;
+  3.	Immediately shut down the reactor and all hazardous processes (e.g., heater, agitator) if any door is opened during operation:
+  IF ReactorRunning AND (NOT DOOR_1_CLOSED OR NOT DOOR_2_CLOSED) THEN
+    EMERGENCY_SHUTDOWN := TRUE;
+    ReactorRunning := FALSE;
+    END_IF;
+  4.	Implement latching to hold the system in a safe state until:
+	•	All doors are securely closed
+	•	A manual reset is triggered
+	5.	Include fail-safe defaults to ensure the system stays shut down if sensor input is lost or invalid.
+
+⸻
+
+🟦 G (Goal) – What You Want to Achieve
+
+Ensure that the reactor only operates when all safety doors are securely closed, and that it immediately enters a safe shutdown state if access is breached. This interlock system enhances operator safety, prevents exposure to hazardous conditions, and ensures compliance with safety standards in industrial chemical processes.
+
+### Generated Code:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program to enforce safety door interlocks on a chemical reactor, ensuring it only operates when all doors are securely closed and triggering emergency shutdowns if breached, to protect personnel and comply with safety standards.  
+
+*(Focus: Safety-critical interlock logic for reactor access control.)*
+**Interlock Safety Doors:**
+
+Develop a self-contained IEC 61131-3 Structured Text program to implement interlocks for safety doors in a chemical reactor. The program should monitor the status of the safety doors and ensure that the reactor remains in a safe state whenever any door is open.
+
+The interlock logic should prevent the reactor from starting or continuing operation if any safety door is not securely closed. Additionally, if a safety door is opened during reactor operation, the program should immediately trigger an emergency shutdown sequence, including deactivating the reactor and stopping any hazardous processes.
+
+This interlock ensures that the reactor only operates when all safety doors are securely closed, providing an essential safeguard against accidental exposure to hazardous conditions. Discuss the importance of safety door interlocks in preventing operator access to dangerous environments and ensuring compliance with safety standards in chemical processing.
+
+**T-A-G:**
+
+🟥 T (Task) – What You Need to Do
+
+Develop a Structured Text (IEC 61131-3) program to implement an interlock system for safety doors on a chemical reactor.
+
+⸻
+
+🟩 A (Action) – How to Do It
+	1.	Monitor all safety doors using digital inputs (e.g., DOOR_1_CLOSED, DOOR_2_CLOSED, etc.).
+	2.	Prevent reactor startup if any door is open:
+ALLOW_START := DOOR_1_CLOSED AND DOOR_2_CLOSED AND DOOR_3_CLOSED;
+  3.	Immediately shut down the reactor and all hazardous processes (e.g., heater, agitator) if any door is opened during operation:
+  IF ReactorRunning AND (NOT DOOR_1_CLOSED OR NOT DOOR_2_CLOSED) THEN
+    EMERGENCY_SHUTDOWN := TRUE;
+    ReactorRunning := FALSE;
+    END_IF;
+  4.	Implement latching to hold the system in a safe state until:
+	•	All doors are securely closed
+	•	A manual reset is triggered
+	5.	Include fail-safe defaults to ensure the system stays shut down if sensor input is lost or invalid.
+
+⸻
+
+🟦 G (Goal) – What You Want to Achieve
+
+Ensure that the reactor only operates when all safety doors are securely closed, and that it immediately enters a safe shutdown state if access is breached. This interlock system enhances operator safety, prevents exposure to hazardous conditions, and ensures compliance with safety standards in industrial chemical processes.
+(* IEC 61131-3 Structured Text Program: Reactor Interlocks *)
+(* Implements safety door interlocks for a chemical reactor *)
+
+PROGRAM ReactorInterlocks
+VAR
+    (* Inputs *)
+    DOOR_1_CLOSED : BOOL;                  (* Door 1 status: TRUE = closed *)
+    DOOR_2_CLOSED : BOOL;                  (* Door 2 status: TRUE = closed *)
+    DOOR_3_CLOSED : BOOL;                  (* Door 3 status: TRUE = closed *)
+    ReactorRunning : BOOL;                 (* Reactor running status: TRUE = active *)
+    
+    (* Outputs *)
+    ALLOW_START : BOOL;                    (* TRUE to allow reactor startup *)
+    EMERGENCY_SHUTDOWN : BOOL;             (* TRUE to trigger emergency shutdown *)
+    ReactorRunning : BOOL;                 (* TRUE = reactor running *)
+    
+    (* Internal Variables *)
+    PreviousReactorRunning : BOOL;         (* Previous reactor state for latching *)
+END_VAR
+
+(* Initialize outputs *)
+ALLOW_START := TRUE;                       (* Allow reactor startup by default *)
+EMERGENCY_SHUTDOWN := FALSE;               (* No emergency shutdown by default *)
+ReactorRunning := FALSE;                   (* Reactor not running by default *)
+PreviousReactorRunning := FALSE;          (* Initialize latch *)
+
+(* Main interlock logic *)
+(* 1. Prevent startup if any door is open *)
+ALLOW_START := DOOR_1_CLOSED AND DOOR_2_CLOSED AND DOOR_3_CLOSED;
+
+(* 2. Trigger emergency shutdown if any door is opened during operation *)
+IF ReactorRunning AND (NOT DOOR_1_CLOSED OR NOT DOOR_2_CLOSED) THEN
+    EMERGENCY_SHUTDOWN := TRUE;            (* Trigger emergency shutdown *)
+    ReactorRunning := FALSE;              (* Stop reactor *)
+    PreviousReactorRunning := FALSE;       (* Reset latch *)
+END_IF;
+
+(* 3. Latch reactor in safe state until all doors are closed *)
+IF NOT ReactorRunning AND EM

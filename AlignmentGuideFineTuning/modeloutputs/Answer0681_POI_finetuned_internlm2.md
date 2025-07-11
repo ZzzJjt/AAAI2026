@@ -1,0 +1,150 @@
+### Intent:
+**Intent Summary:**  
+Develop a control narrative for automated beer brewing with specific setpoints, focusing on the lautering process (equipment, instrumentation, and step-by-step logic) to ensure repeatability and integration with PLC/HMI systems.  
+
+**Code Generation Intent:**  
+Create structured control logic for beer brewing automation, emphasizing lautering stage parameters (turbidity, flow, temperature) with conditional triggers for operational reliability.
+
+### Prompt:
+**Control Narrative Beer Brewing:**
+
+Create a control narrative for beer brewing including concrete setpoints and ranges.
+
+Create a detailed explanation of the Lautering process (Section 4). Include the equipment and instrumentation needed. Provide a list of the steps to execute.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Define Your Role
+
+Act as a process control engineer responsible for developing a structured control narrative for an automated beer brewing system, with special focus on the lautering stage.
+
+⸻
+
+🟩 I (Input) – Information Provided
+
+You are to document:
+	•	A complete control narrative for the beer brewing process, including specific setpoints and acceptable ranges for each key parameter
+	•	A detailed explanation of the Lautering process (Section 4) that includes:
+	•	Required equipment and instrumentation
+	•	A step-by-step operational sequence
+	•	Key control logic or conditions (e.g., turbidity cutoff, flow thresholds)
+
+⸻
+
+🟧 S (Steps) – Steps to Perform
+	1.	Outline the full beer brewing process, including stages such as mashing, lautering, boiling, fermentation, and packaging
+	•	Provide concrete control values (e.g., mash temp = 65–68 °C, sparge water temp = 75–78 °C)
+	2.	For Section 4: Lautering, include:
+	•	Equipment: lauter tun, rake mechanism, sparge arm, pump
+	•	Instrumentation: level sensor, turbidity meter, flow transmitter, temperature probe
+	•	Control Steps:
+	1.	Start recirculation loop
+	2.	Monitor turbidity; continue until it drops below threshold
+	3.	Begin wort transfer to kettle
+	4.	Start sparge water flow while maintaining level
+	5.	Monitor volume, flow rate, and turbidity
+	6.	End lautering once volume is met and wort clarity is acceptable
+	3.	Include logical triggers like:
+	•	IF Turbidity > Limit THEN divert flow to waste
+	•	IF Level < Minimum THEN stop sparge water
+
+⸻
+
+🟦 E (Expectation) – Expected Outcome
+
+Produce a clear, structured control narrative that:
+	•	Defines measurable control criteria for brewing stages
+	•	Provides operators and automation engineers with step-by-step lautering logic
+	•	Enhances reliability and repeatability of the brewing process
+	•	Facilitates easy integration into PLC/HMI systems and operator training materials
+
+### Generated Code:
+**Intent Summary:**  
+Develop a control narrative for automated beer brewing with specific setpoints, focusing on the lautering process (equipment, instrumentation, and step-by-step logic) to ensure repeatability and integration with PLC/HMI systems.  
+
+**Code Generation Intent:**  
+Create structured control logic for beer brewing automation, emphasizing lautering stage parameters (turbidity, flow, temperature) with conditional triggers for operational reliability.
+**Control Narrative Beer Brewing:**
+
+Create a control narrative for beer brewing including concrete setpoints and ranges.
+
+Create a detailed explanation of the Lautering process (Section 4). Include the equipment and instrumentation needed. Provide a list of the steps to execute.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Define Your Role
+
+Act as a process control engineer responsible for developing a structured control narrative for an automated beer brewing system, with special focus on the lautering stage.
+
+⸻
+
+🟩 I (Input) – Information Provided
+
+You are to document:
+	•	A complete control narrative for the beer brewing process, including specific setpoints and acceptable ranges for each key parameter
+	•	A detailed explanation of the Lautering process (Section 4) that includes:
+	•	Required equipment and instrumentation
+	•	A step-by-step operational sequence
+	•	Key control logic or conditions (e.g., turbidity cutoff, flow thresholds)
+
+⸻
+
+🟧 S (Steps) – Steps to Perform
+	1.	Outline the full beer brewing process, including stages such as mashing, lautering, boiling, fermentation, and packaging
+	•	Provide concrete control values (e.g., mash temp = 65–68 °C, sparge water temp = 75–78 °C)
+	2.	For Section 4: Lautering, include:
+	•	Equipment: lauter tun, rake mechanism, sparge arm, pump
+	•	Instrumentation: level sensor, turbidity meter, flow transmitter, temperature probe
+	•	Control Steps:
+	1.	Start recirculation loop
+	2.	Monitor turbidity; continue until it drops below threshold
+	3.	Begin wort transfer to kettle
+	4.	Start sparge water flow while maintaining level
+	5.	Monitor volume, flow rate, and turbidity
+	6.	End lautering once volume is met and wort clarity is acceptable
+	3.	Include logical triggers like:
+	•	IF Turbidity > Limit THEN divert flow to waste
+	•	IF Level < Minimum THEN stop sparge water
+
+⸻
+
+🟦 E (Expectation) – Expected Outcome
+
+Produce a clear, structured control narrative that:
+	•	Defines measurable control criteria for brewing stages
+	•	Provides operators and automation engineers with step-by-step lautering logic
+	•	Enhances reliability and repeatability of the brewing process
+	•	Facilitates easy integration into PLC/HMI systems and operator training materials
+
+**C-A-S-E:**
+
+🟠 C (Context) – Background and Purpose
+
+Automated beer brewing systems require precise control of various parameters to ensure consistent quality and yield. The lautering stage, where the liquid wort is separated from the solid grains, is a critical step that requires careful monitoring and control. Developing a detailed control narrative for this stage can help ensure that the process is executed reliably and efficiently.
+
+🟢 A (Action) – Action Taken
+
+You have created a control narrative for the beer brewing process, with a focus on the lautering stage. The narrative includes specific setpoints and ranges for key parameters, as well as a detailed explanation of the lautering process, including the required equipment and instrumentation, and a step-by-step operational sequence.
+
+🟣 S (Solution) – Solution
+
+The control narrative for the lautering stage of beer brewing includes the following:
+
+•	Equipment: lauter tun, rake mechanism, sparge arm, pump
+•	Instrumentation: level sensor, turbidity meter, flow transmitter, temperature probe
+•	Control Steps:
+	1.	Start recirculation loop
+	2.	Monitor turbidity; continue until it drops below threshold
+	3.	Begin wort transfer to kettle
+	4.	Start sparge water flow while maintaining level
+	5.	Monitor volume, flow rate, and turbidity
+	6.	End lautering once volume is met and wort clarity is acceptable
+•	Logical Triggers:
+	•	IF Turbidity > Limit THEN divert flow to waste
+	•	IF Level < Minimum THEN stop sparge water
+
+🟠 E (Evaluation) – Evaluation of the Results
+
+The control narrative you have developed provides a clear and structured approach to the lautering stage of beer brewing. It includes specific setpoints and ranges for key parameters, as well as a detailed explanation of the process, equipment, and instrumentation required. The step-by-step operational sequence ensures that the process is executed reliably and efficiently, while the logical triggers help maintain control and prevent issues such as overflow or turbidity issues.
+
+Overall, this control narrative will be valuable for operators and automation engineers, as it provides a comprehensive guide to the lautering stage of beer brewing and helps ensure consistent quality and yield. It can be easily integrated into PLC/HMI systems and used for operator training, ensuring that the brewing process is executed

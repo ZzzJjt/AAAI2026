@@ -1,0 +1,155 @@
+### Intent:
+**Intent Summary:**  
+Create a reusable IEC 61131-3 Structured Text function block to perform a precise floating-point comparison (with configurable decimal precision) for real-time PLC applications, including input validation and clear output flags.
+
+### Prompt:
+**Binary Search:**
+Implement a self-contained function block in IEC 61131-3 structured text to perform a binary search on an array of 100 integers. Include input validation and efficient handling of search boundaries.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Define Your Role
+
+Act as a PLC programmer tasked with developing a reusable and efficient search utility in IEC 61131-3 Structured Text for use in real-time automation systems.
+
+⸻
+
+🟩 I (Input) – Information Provided
+
+You are to implement a binary search algorithm within a function block that operates on an array of 100 integers. The function must:
+	•	Accept a sorted array, a target value, and an enable trigger
+	•	Perform input validation (e.g., index bounds, empty range)
+	•	Efficiently manage search boundaries (low, high, mid)
+	•	Return both a boolean flag (Found) and the index where the value was located (or -1 if not found)
+
+⸻
+
+🟧 S (Steps) – Steps to Perform
+	1.	Define a function block interface with inputs:
+	•	SearchArray : ARRAY[1..100] OF INT
+	•	TargetValue : INT
+	•	Enable : BOOL
+	2.	Add internal variables for Low, High, Mid, and Found.
+	3.	Use a WHILE loop to implement binary search logic:
+	•	Compare the middle element with the target
+	•	Adjust Low or High accordingly
+	•	Break on match or conclude if Low > High
+	4.	Output:
+	•	Found : BOOL
+	•	Index : INT (valid index or -1)
+	5.	Include input validation and comment the logic for maintainability.
+
+⸻
+
+🟦 E (Expectation) – Expected Outcome
+
+Deliver a robust, reusable Structured Text function block that efficiently performs binary search on a fixed-size array. The implementation should be:
+	•	Scan-cycle safe for use in real-time PLC environments
+	•	Modular, with clear documentation and boundary checks
+	•	Adaptable for future use cases involving longer arrays or dynamic array sizes (with minor modifications)
+
+### Generated Code:
+**Intent Summary:**  
+Create a reusable IEC 61131-3 Structured Text function block to perform a precise floating-point comparison (with configurable decimal precision) for real-time PLC applications, including input validation and clear output flags.
+**Binary Search:**
+Implement a self-contained function block in IEC 61131-3 structured text to perform a binary search on an array of 100 integers. Include input validation and efficient handling of search boundaries.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Define Your Role
+
+Act as a PLC programmer tasked with developing a reusable and efficient search utility in IEC 61131-3 Structured Text for use in real-time automation systems.
+
+⸻
+
+🟩 I (Input) – Information Provided
+
+You are to implement a binary search algorithm within a function block that operates on an array of 100 integers. The function must:
+	•	Accept a sorted array, a target value, and an enable trigger
+	•	Perform input validation (e.g., index bounds, empty range)
+	•	Efficiently manage search boundaries (low, high, mid)
+	•	Return both a boolean flag (Found) and the index where the value was located (or -1 if not found)
+
+⸻
+
+🟧 S (Steps) – Steps to Perform
+	1.	Define a function block interface with inputs:
+	•	SearchArray : ARRAY[1..100] OF INT
+	•	TargetValue : INT
+	•	Enable : BOOL
+	2.	Add internal variables for Low, High, Mid, and Found.
+	3.	Use a WHILE loop to implement binary search logic:
+	•	Compare the middle element with the target
+	•	Adjust Low or High accordingly
+	•	Break on match or conclude if Low > High
+	4.	Output:
+	•	Found : BOOL
+	•	Index : INT (valid index or -1)
+	5.	Include input validation and comment the logic for maintainability.
+
+⸻
+
+🟦 E (Expectation) – Expected Outcome
+
+Deliver a robust, reusable Structured Text function block that efficiently performs binary search on a fixed-size array. The implementation should be:
+	•	Scan-cycle safe for use in real-time PLC environments
+	•	Modular, with clear documentation and boundary checks
+	•	Adaptable for future use cases involving longer arrays or dynamic array sizes (with minor modifications) To create a reusable IEC 61131-3 Structured Text function block for performing a binary search on an array of 100 integers, follow these steps:
+
+1. **Define the Function Block Interface:**
+   - Inputs:
+     - `SearchArray`: An array of 100 integers.
+     - `TargetValue`: The integer value to search for.
+     - `Enable`: A boolean trigger to start the search.
+   - Outputs:
+     - `Found`: A boolean indicating whether the target value was found.
+     - `Index`: The index of the target value in the array, or -1 if not found.
+
+2. **Implement the Binary Search Logic:**
+   - Initialize `Low` and `High` to the first and last indices of the array.
+   - Use a `WHILE` loop to perform the binary search:
+     - Calculate `Mid` as the average of `Low` and `High`.
+     - Compare the middle element with the target value.
+     - Adjust `Low` or `High` based on the comparison.
+     - Break the loop if the target is found or if `Low` exceeds `High`.
+
+3. **Include Input Validation:**
+   - Ensure that the `Enable` input is true before starting the search.
+   - Validate that the `TargetValue` is within the range of the array elements.
+   - Check that the array is not empty.
+
+4. **Document the Function Block:**
+   - Add comments to explain the purpose, inputs, outputs, and logic of the function block.
+
+Here is the structured text implementation:
+
+```structuredtext
+FUNCTION_BLOCK BinarySearch
+VAR_INPUT
+    SearchArray : ARRAY[1..100] OF INT;
+    TargetValue : INT;
+    Enable : BOOL;
+END_VAR
+
+VAR_OUTPUT
+    Found : BOOL;
+    Index : INT;
+END_VAR
+
+VAR
+    Low : INT := 1;
+    High : INT := 100;
+    Mid : INT;
+    Found : BOOL := FALSE;
+    Index : INT := -1;
+END_VAR
+
+IF Enable THEN
+    IF TargetValue >= SearchArray[1] AND TargetValue <= SearchArray[100] THEN
+        WHILE Low <= High DO
+            Mid := (Low + High) DIV 2;
+            IF SearchArray[Mid] = TargetValue THEN
+                Found := TRUE;
+                Index := Mid;
+                BREAK;
+            ELSIF SearchArray[Mid] < TargetValue

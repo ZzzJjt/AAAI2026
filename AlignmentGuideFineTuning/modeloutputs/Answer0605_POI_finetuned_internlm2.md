@@ -1,0 +1,153 @@
+### Intent:
+The task involves implementing a PID temperature control loop in IEC 61131-3 to regulate a heating valve's position based on temperature feedback, with configurable gains, manual override capability, and output limits.  
+
+**Intent Summary:**  
+*Generate PID control logic for temperature regulation with configurable parameters, manual mode, and output constraints in IEC 61131-3.*
+
+### Prompt:
+**Learning IEC 61499:**
+
+Provide a concise introduction to the IEC 61499 programming language, emphasizing key concepts for someone already familiar with IEC 61131-3. Include a comparison of their fundamental differences in terms of architecture, execution models, and flexibility for distributed control systems. Additionally, compile a list of five key references for further reading on IEC 61499, highlighting its relevance in modern industrial applications.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a control systems engineer who is already experienced with IEC 61131-3 and looking to expand your expertise to include IEC 61499, which is becoming increasingly important in distributed and Industry 4.0 automation systems.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You are asked to write a concise introduction to IEC 61499 that:
+	•	Targets professionals familiar with IEC 61131-3
+	•	Explains key concepts such as event-driven function blocks, distribution, and reusability
+	•	Includes a comparison between IEC 61131-3 and IEC 61499 regarding:
+	•	Architecture
+	•	Execution models
+	•	Flexibility for distributed control
+	•	Compiles five essential references for further reading on IEC 61499’s theory and industrial applications
+
+⸻
+
+🟧 S (Steps) – How to Complete the Task
+	1.	Introduce IEC 61499 briefly: describe its origin and purpose
+	2.	Explain key concepts:
+	•	Function blocks (basic, composite, service interface)
+	•	Event-data separation
+	•	Event-driven execution model
+	•	Distribution across networked devices
+	3.	Compare with IEC 61131-3:
+	•	Centralized (61131-3) vs. Distributed (61499)
+	•	Scan-based execution vs. Event-driven triggering
+	•	Portability and reuse of function blocks
+	4.	List five high-quality references:
+	•	Standards documentation
+	•	Academic papers or textbooks
+	•	Technical blogs or white papers
+	5.	Conclude with a brief summary of how IEC 61499 supports flexible, modern industrial control
+
+⸻
+
+🟦 E (Expectation) – What You Will Deliver
+
+A concise, professional-level technical overview that:
+	•	Helps IEC 61131-3 users quickly understand and position IEC 61499
+	•	Clearly contrasts architectural and execution philosophies
+	•	Provides a roadmap for deeper study via key references
+	•	Serves as a useful onboarding guide or training material in smart manufacturing or IIoT contexts
+
+### Generated Code:
+The task involves implementing a PID temperature control loop in IEC 61131-3 to regulate a heating valve's position based on temperature feedback, with configurable gains, manual override capability, and output limits.  
+
+**Intent Summary:**  
+*Generate PID control logic for temperature regulation with configurable parameters, manual mode, and output constraints in IEC 61131-3.*
+**Learning IEC 61499:**
+
+Provide a concise introduction to the IEC 61499 programming language, emphasizing key concepts for someone already familiar with IEC 61131-3. Include a comparison of their fundamental differences in terms of architecture, execution models, and flexibility for distributed control systems. Additionally, compile a list of five key references for further reading on IEC 61499, highlighting its relevance in modern industrial applications.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a control systems engineer who is already experienced with IEC 61131-3 and looking to expand your expertise to include IEC 61499, which is becoming increasingly important in distributed and Industry 4.0 automation systems.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You are asked to write a concise introduction to IEC 61499 that:
+	•	Targets professionals familiar with IEC 61131-3
+	•	Explains key concepts such as event-driven function blocks, distribution, and reusability
+	•	Includes a comparison between IEC 61131-3 and IEC 61499 regarding:
+	•	Architecture
+	•	Execution models
+	•	Flexibility for distributed control
+	•	Compiles five essential references for further reading on IEC 61499’s theory and industrial applications
+
+⸻
+
+🟧 S (Steps) – How to Complete the Task
+	1.	Introduce IEC 61499 briefly: describe its origin and purpose
+	2.	Explain key concepts:
+	•	Function blocks (basic, composite, service interface)
+	•	Event-data separation
+	•	Event-driven execution model
+	•	Distribution across networked devices
+	3.	Compare with IEC 61131-3:
+	•	Centralized (61131-3) vs. Distributed (61499)
+	•	Scan-based execution vs. Event-driven triggering
+	•	Portability and reuse of function blocks
+	4.	List five high-quality references:
+	•	Standards documentation
+	•	Academic papers or textbooks
+	•	Technical blogs or white papers
+	5.	Conclude with a brief summary of how IEC 61499 supports flexible, modern industrial control
+
+⸻
+
+🟦 E (Expectation) – What You Will Deliver
+
+A concise, professional-level technical overview that:
+	•	Helps IEC 61131-3 users quickly understand and position IEC 61499
+	•	Clearly contrasts architectural and execution philosophies
+	•	Provides a roadmap for deeper study via key references
+	•	Serves as a useful onboarding guide or training material in smart manufacturing or IIoT contexts
+
+**R-E-F-L-E:**
+
+🟠 R (Role) – Your Role
+
+As a control systems engineer, you are responsible for developing and implementing automation solutions in industrial environments. You are familiar with IEC 61131-3, the widely used programming language for PLCs, and are now looking to expand your knowledge to include IEC 61499, a newer standard for distributed control systems.
+
+🟢 E (Expectation) – What You Need to Do
+
+Write a concise introduction to IEC 61499 that targets professionals already familiar with IEC 61131-3. Explain the key concepts of IEC 61499, such as function blocks, event-driven execution, and distribution. Compare IEC 61499 with IEC 61131-3 in terms of architecture, execution models, and flexibility for distributed control. Finally, compile a list of five high-quality references for further reading on IEC 61499.
+
+🟠 R (Role) – Your Role
+
+You are a control systems engineer who is already experienced with IEC 61131-3 and looking to expand your expertise to include IEC 61499, which is becoming increasingly important in distributed and Industry 4.0 automation systems.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You are asked to write a concise introduction to IEC 61499 that:
+	•	Targets professionals familiar with IEC 61131-3
+	•	Explains key concepts such as function blocks, event-driven execution, and distribution
+	•	Compares IEC 61499 with IEC 61131-3 in terms of architecture, execution models, and flexibility for distributed control
+	•	Compiles five essential references for further reading on IEC 61499’s theory and industrial applications
+
+⸻
+
+🟧 S (Steps) – How to Complete the Task
+
+	1.	Introduce IEC 61499 briefly: describe its origin and purpose
+	2.	Explain key concepts:
+	•	Function blocks (basic, composite, service interface)
+	•	Event-data separation
+	•	Event-driven execution model
+	•	Distribution across networked devices
+	3.	Compare with IEC 61131-3:
+	•	Centralized (61131-3) vs. Distributed (61499)
+	•	Scan-based execution vs. Event

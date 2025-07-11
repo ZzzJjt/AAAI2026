@@ -1,0 +1,202 @@
+### Intent:
+**Intent Summary:**  
+Create a reusable IEC 61131-3 Structured Text function block to efficiently compute the mean and sample standard deviation of a 100-integer array on a PLC, ensuring real-time performance, overflow handling, and clear documentation for process monitoring or quality control applications.  
+
+*(Focus: Statistical calculation, PLC constraints, modularity, and real-time suitability.)*
+
+### Prompt:
+**Mean and StdDev:**
+
+Create a self-contained function block in IEC 61131-3 Structured Text to compute both the mean and standard deviation of an input array consisting of 100 integers. Ensure that the function block is modular and includes detailed comments explaining the steps of calculating both statistical measures. Address potential issues related to overflow or precision when handling large datasets, and provide insights into the function block’s applicability within real-time control systems.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a PLC programmer or automation engineer tasked with developing a reusable and efficient function block in IEC 61131-3 Structured Text to compute statistical metrics directly on a programmable logic controller.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You are provided with:
+	•	A 100-element integer input array:
+InputArray: ARRAY[1..100] OF INT
+	•	The requirement to compute:
+	•	The mean (arithmetic average)
+	•	The sample standard deviation
+	•	Constraints such as:
+	•	Limited processing power and memory on PLCs
+	•	The need for real-time execution within a control scan cycle
+	•	Potential for overflow or precision loss during integer summation and squared operations
+
+⸻
+
+🟧 S (Steps) – What You Need to Do
+	1.	Create a function block named MeanStdDevCalculator with appropriate inputs and outputs:
+ VAR_INPUT
+    InputArray : ARRAY[1..100] OF INT;
+  END_VAR
+  VAR_OUTPUT
+    Mean : REAL;
+    StdDev : REAL;
+  END_VAR
+  2.	Implement logic for the mean:
+	•	Accumulate the sum using a loop with a REAL accumulator to avoid overflow
+	•	Divide by 100.0 to obtain the mean
+	3.	Implement logic for the standard deviation:
+	•	Loop again through the array
+	•	Subtract the mean from each element, square the result, and accumulate
+	•	Divide by 99.0 (N - 1) and apply the square root function to get the standard deviation
+	4.	Use inline comments to explain each part of the process:
+	•	Why REAL is used for intermediate variables
+	•	Why the divisor is 99.0 (for sample standard deviation)
+	•	Error checking strategies (optional)
+	5.	Optimize for real-time use:
+	•	Use fixed-size loops for deterministic timing
+	•	Avoid dynamic memory or recursive calls
+	•	Test on target PLC hardware to ensure execution fits within scan time
+
+⸻
+
+🟦 E (Expectation) – What Success Looks Like
+
+You deliver a fully operational, modular function block that:
+	•	Accurately calculates the mean and standard deviation of a 100-element integer array
+	•	Executes efficiently and predictably within a real-time PLC scan cycle
+	•	Is applicable to:
+	•	Process monitoring
+	•	Sensor signal diagnostics
+	•	Quality control and statistical alarms
+	•	Is reusable and maintainable, with well-commented logic and clear structure
+
+### Generated Code:
+**Intent Summary:**  
+Create a reusable IEC 61131-3 Structured Text function block to efficiently compute the mean and sample standard deviation of a 100-integer array on a PLC, ensuring real-time performance, overflow handling, and clear documentation for process monitoring or quality control applications.  
+
+*(Focus: Statistical calculation, PLC constraints, modularity, and real-time suitability.)*
+**Mean and StdDev:**
+
+Create a self-contained function block in IEC 61131-3 Structured Text to compute both the mean and standard deviation of an input array consisting of 100 integers. Ensure that the function block is modular and includes detailed comments explaining the steps of calculating both statistical measures. Address potential issues related to overflow or precision when handling large datasets, and provide insights into the function block’s applicability within real-time control systems.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a PLC programmer or automation engineer tasked with developing a reusable and efficient function block in IEC 61131-3 Structured Text to compute statistical metrics directly on a programmable logic controller.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You are provided with:
+	•	A 100-element integer input array:
+InputArray: ARRAY[1..100] OF INT
+	•	The requirement to compute:
+	•	The mean (arithmetic average)
+	•	The sample standard deviation
+	•	Constraints such as:
+	•	Limited processing power and memory on PLCs
+	•	The need for real-time execution within a control scan cycle
+	•	Potential for overflow or precision loss during integer summation and squared operations
+
+⸻
+
+🟧 S (Steps) – What You Need to Do
+	1.	Create a function block named MeanStdDevCalculator with appropriate inputs and outputs:
+ VAR_INPUT
+    InputArray : ARRAY[1..100] OF INT;
+  END_VAR
+  VAR_OUTPUT
+    Mean : REAL;
+    StdDev : REAL;
+  END_VAR
+  2.	Implement logic for the mean:
+	•	Accumulate the sum using a loop with a REAL accumulator to avoid overflow
+	•	Divide by 100.0 to obtain the mean
+	3.	Implement logic for the standard deviation:
+	•	Loop again through the array
+	•	Subtract the mean from each element, square the result, and accumulate
+	•	Divide by 99.0 (N - 1) and apply the square root function to get the standard deviation
+	4.	Use inline comments to explain each part of the process:
+	•	Why REAL is used for intermediate variables
+	•	Why the divisor is 99.0 (for sample standard deviation)
+	•	Error checking strategies (optional)
+	5.	Optimize for real-time use:
+	•	Use fixed-size loops for deterministic timing
+	•	Avoid dynamic memory or recursive calls
+	•	Test on target PLC hardware to ensure execution fits within scan time
+
+⸻
+
+🟦 E (Expectation) – What Success Looks Like
+
+You deliver a fully operational, modular function block that:
+	•	Accurately calculates the mean and standard deviation of a 100-element integer array
+	•	Executes efficiently and predictably within a real-time PLC scan cycle
+	•	Is applicable to:
+	•	Process monitoring
+	•	Sensor signal diagnostics
+	•	Quality control and statistical alarms
+	•	Is reusable and maintainable, with well-commented logic and clear structure
+FUNCTION_BLOCK MeanStdDevCalculator
+VAR_INPUT
+    InputArray : ARRAY[1..100] OF INT; // Input array of 100 integers
+END_VAR
+
+VAR_OUTPUT
+    Mean : REAL;
+    StdDev : REAL;
+END_VAR
+
+VAR
+    Accumulator : REAL; // Accumulator for mean calculation
+    Sum : REAL;
+    SqSum : REAL;
+    N : INT; // Number of elements
+    MeanVal : REAL;
+    StdDevVal : REAL;
+END_VAR
+
+METHOD Execute : BOOL
+BEGIN
+    // Reset outputs
+    Mean := 0.0;
+    StdDev := 0.0;
+    
+    // Initialize accumulator
+    Accumulator := 0.0;
+    
+    // Calculate mean
+    FOR i := 1 TO 100 DO
+        Accumulator := Accumulator + InputArray[i];
+    END_FOR;
+    Mean := Accumulator / 100.0;
+    
+    // Calculate standard deviation
+    SqSum := 0.0;
+    N := 100;
+    FOR i := 1 TO 100 DO
+        SqSum := SqSum + (InputArray[i] - Mean) * (InputArray[i] - Mean);
+    END_FOR;
+    StdDev := SQRT(SqSum / (N - 1));
+    
+    // Return TRUE to indicate successful execution
+    RETURN TRUE;
+END_METHOD
+END_FUNCTION_BLOCK
+
+// Comments for each step of the calculation
+// 1. Mean calculation
+// Accumulate the sum using a loop with a REAL accumulator to avoid overflow
+// Divide by 100.0 to obtain the mean
+// 2. Standard deviation calculation
+// Loop again through the array
+// Subtract the mean from each element, square the result, and accumulate
+// Divide by 99.0 (N - 1) and apply the square root function to get the standard deviation
+// 3. Error checking
+// Optional: Check for division by zero or invalid inputs
+// 4. Real-time optimization
+// Use fixed-size loops for deterministic timing
+// Avoid dynamic memory or recursive calls
+// Test on target PLC hardware to ensure execution fits within scan time

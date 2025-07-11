@@ -1,0 +1,153 @@
+### Intent:
+The task involves creating a structured I/O list for feedwater control in a power plant's steam-water cycle, documenting instrumentation signals (analog/digital), ranges, setpoints, and P&ID references to support PLC/HMI integration and commissioning.  
+
+**Intent Summary:**  
+*"Generate a standardized I/O list table for feedwater control signals (flow, level, valves, pumps) with tagnames, engineering units, ranges, and P&ID links to enable control system implementation."*
+
+### Prompt:
+**IO List Steam Water Cycle:**
+
+Create an I/O list as a table for feedwater control in a steam-water cycle in a power plant. Have as columns names, signal tagnumber, analog/digital, engineering unit, ranges, setpoint, and P&ID reference.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Define Your Role
+
+Act as a control systems engineer responsible for defining instrumentation and signal documentation for the feedwater control system in a steam-water cycle of a power plant.
+
+⸻
+
+🟩 I (Input) – Information Provided
+
+You are to create an I/O list in table format that includes the following columns for each signal:
+	•	Signal Name
+	•	Signal Tag Number
+	•	Analog/Digital
+	•	Engineering Unit
+	•	Range
+	•	Setpoint
+	•	P&ID Reference
+
+This list will cover essential elements of the feedwater control loop, such as flow transmitters, drum level indicators, control valves, and pump statuses.
+
+⸻
+
+🟧 S (Steps) – Steps to Perform
+	1.	Identify common I/O signals associated with feedwater control, including:
+	•	Drum Level Transmitters
+	•	Feedwater Flow Transmitters
+	•	Control Valve Positions
+	•	Pump Start/Stop Signals
+	2.	Assign each signal a unique tagnumber and specify whether it is analog or digital.
+	3.	Add appropriate engineering units (e.g., %, t/h, bar), define realistic ranges (e.g., 0–100%), and enter typical setpoints.
+	4.	Ensure each entry is linked to a P&ID reference for traceability and cross-discipline alignment.
+	5.	Format the data into a clean, consistent table that can be imported into design tools, PLC/HMI projects, or engineering reports.
+
+⸻
+
+🟦 E (Expectation) – Expected Outcome
+
+Deliver a complete and professionally structured I/O list for the feedwater control section of the steam-water cycle. This list will support:
+	•	PLC configuration
+	•	Instrumentation specification
+	•	HMI integration
+	•	Commissioning and validation aligned with P&ID documentation
+
+### Generated Code:
+The task involves creating a structured I/O list for feedwater control in a power plant's steam-water cycle, documenting instrumentation signals (analog/digital), ranges, setpoints, and P&ID references to support PLC/HMI integration and commissioning.  
+
+**Intent Summary:**  
+*"Generate a standardized I/O list table for feedwater control signals (flow, level, valves, pumps) with tagnames, engineering units, ranges, and P&ID links to enable control system implementation."*
+**IO List Steam Water Cycle:**
+
+Create an I/O list as a table for feedwater control in a steam-water cycle in a power plant. Have as columns names, signal tagnumber, analog/digital, engineering unit, ranges, setpoint, and P&ID reference.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Define Your Role
+
+Act as a control systems engineer responsible for defining instrumentation and signal documentation for the feedwater control system in a steam-water cycle of a power plant.
+
+⸻
+
+🟩 I (Input) – Information Provided
+
+You are to create an I/O list in table format that includes the following columns for each signal:
+	•	Signal Name
+	•	Signal Tag Number
+	•	Analog/Digital
+	•	Engineering Unit
+	•	Range
+	•	Setpoint
+	•	P&ID Reference
+
+This list will cover essential elements of the feedwater control loop, such as flow transmitters, drum level indicators, control valves, and pump statuses.
+
+⸻
+
+🟧 S (Steps) – Steps to Perform
+	1.	Identify common I/O signals associated with feedwater control, including:
+	•	Drum Level Transmitters
+	•	Feedwater Flow Transmitters
+	•	Control Valve Positions
+	•	Pump Start/Stop Signals
+	2.	Assign each signal a unique tagnumber and specify whether it is analog or digital.
+	3.	Add appropriate engineering units (e.g., %, t/h, bar), define realistic ranges (e.g., 0–100%), and enter typical setpoints.
+	4.	Ensure each entry is linked to a P&ID reference for traceability and cross-discipline alignment.
+	5.	Format the data into a clean, consistent table that can be imported into design tools, PLC/HMI projects, or engineering reports.
+
+⸻
+
+🟦 E (Expectation) – Expected Outcome
+
+Deliver a complete and professionally structured I/O list for the feedwater control section of the steam-water cycle. This list will support:
+	•	PLC configuration
+	•	Instrumentation specification
+	•	HMI integration
+	•	Commissioning and validation aligned with P&ID documentation
+	•	Improved communication and traceability across engineering teams
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_ROWS 10
+#define MAX_COLS 10
+#define MAX_LEN 50
+
+// Struct to represent a row in the I/O list
+typedef struct {
+    char tagnumber[MAX_LEN];
+    char analog_digital;
+    char unit[MAX_LEN];
+    char range[MAX_LEN];
+    char setpoint[MAX_LEN];
+    char pid_reference[MAX_LEN];
+} IOListRow;
+
+// Struct to represent the I/O list
+typedef struct {
+    IOListRow rows[MAX_ROWS][MAX_COLS];
+    int num_rows;
+    int num_cols;
+} IOList;
+
+// Function to initialize the I/O list
+void init_io_list(IOList *list, int num_rows, int num_cols) {
+    list->num_rows = num_rows;
+    list->num_cols = num_cols;
+    for (int i = 0; i < num_rows; i++) {
+        for (int j = 0; j < num_cols; j++) {
+            list->rows[i][j].tagnumber[0] = '\0';
+            list->rows[i][j].analog_digital = 'A';
+            list->rows[i][j].unit[0] = '\0';
+            list->rows[i][j].range[0] = '\0';
+            list->rows[i][j].setpoint[0] = '\0';
+            list->rows[i][j].pid_reference[0] = '\0';
+        }
+    }
+}
+
+// Function to add a row to the I/O list
+void add_row(IOList *list, char tagnumber[], char analog_digital, char unit[], char range[], char setpoint[], char pid_reference[]) {
+    strncpy(list->rows[list->num_rows - 1][list->num_cols - 1].tagnumber, tagnumber, MAX_

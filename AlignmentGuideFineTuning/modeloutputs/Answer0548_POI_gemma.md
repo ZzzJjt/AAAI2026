@@ -1,0 +1,314 @@
+### Intent:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text PLC program for a pick-and-place robot with interlocked manual (step-by-step control) and auto (timed sequence) modes, managing conveyor A to B transfers safely.  
+
+*(Key focus: Mode interlocking, manual/auto logic separation, timed auto sequence, and safety.)*
+
+### Prompt:
+**Pick-and-Place Application for a Robot Using 61131-3 Structured Text:**
+
+Write a PLC program in structured text (ST) according to IEC 61131-3 standards for a pick-and-place robotic application with two conveyors, following the process described below:
+
+Process Description:
+
+The system operates in two modes: Manual Mode and Auto Mode. These modes are interlocked, meaning only one can be active at any time.
+
+	1.	Manual Mode:
+	•	When the Manual button is pressed, the robotic arm will execute the following steps in response to individual manual commands:
+	•	Clip: Clip the product from conveyor A.
+	•	Transfer: Move the product to conveyor B.
+	•	Release: Release the product onto conveyor B, allowing it to be carried away.
+	2.	Auto Mode:
+	•	When the Auto button is pressed, the robotic arm will execute the entire pick-and-place process automatically:
+	•	Clip: Clip the product from conveyor A and hold it.
+	•	Transfer: Transfer the product to conveyor B (this action takes 2 seconds).
+	•	Release: Release the product onto conveyor B.
+	•	The auto process completes after one cycle, but can be re-triggered by pressing the Auto button again.
+
+The system should ensure that manual and auto modes cannot operate simultaneously, using interlocking logic to prevent conflicts between the two modes.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a PLC programmer responsible for developing a Structured Text (ST) program according to IEC 61131-3 standards. Your goal is to implement control logic for a pick-and-place robotic arm with two operating modes: Manual and Auto, while ensuring interlocks and safe operation.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+🔘 Mode Selection:
+	•	BtnManual: Activates Manual Mode
+	•	BtnAuto: Activates Auto Mode
+	•	Only one mode may be active at a time (interlocked)
+
+🎮 Manual Mode Commands:
+	•	CmdClip: Pick product from Conveyor A
+	•	CmdTransfer: Move product to Conveyor B
+	•	CmdRelease: Drop product on Conveyor B
+
+🤖 Auto Mode Sequence (triggered by Auto button):
+	•	Clip → Transfer (2-second delay) → Release
+	•	Performs one complete cycle per trigger
+
+🚦 Outputs (you define the actions):
+	•	Robot performs tasks as directed by mode-specific logic
+
+⸻
+
+🟧 S (Steps) – What You Need to Do
+	1.	Implement Mode Interlock Logic
+	•	When BtnManual is pressed, activate ManualMode and disable AutoMode.
+	•	When BtnAuto is pressed, activate AutoMode and disable ManualMode.
+	2.	Handle Manual Mode Logic
+	•	Respond to CmdClip, CmdTransfer, and CmdRelease independently.
+	•	Robot should perform only the task issued by the corresponding button.
+	•	No sequence or delay logic is required in manual mode.
+	3.	Handle Auto Mode Logic
+	•	On rising edge of BtnAuto, set AutoTrigger := TRUE.
+	•	Use a state machine to perform:
+	•	State 0: Clip
+	•	State 1: Transfer (wait 2 seconds using a TON timer)
+	•	State 2: Release and reset the sequence
+	4.	Ensure Safety and Robustness
+	•	Reset timers and state machine at the end of each Auto cycle
+	•	Prevent overlapping commands or simultaneous mode activation
+
+⸻
+
+🟦 E (Expectation) – What Success Looks Like
+
+Your final program will:
+	•	Ensure safe, interlocked switching between Manual and Auto modes
+	•	Allow step-by-step control of the robot in Manual mode
+	•	Execute a timed, automated pick-and-place sequence in Auto mode
+	•	Be easily extensible for status indicators, alarms, or cycle counters
+	•	Follow best practices in IEC 61131-3 Structured Text
+
+⸻
+
+✅ Sample Snippet:
+VAR
+    BtnManual, BtnAuto : BOOL;
+    ManualMode, AutoMode, AutoTrigger : BOOL;
+    CmdClip, CmdTransfer, CmdRelease : BOOL;
+    State : INT := 0;
+    AutoTimer : TON;
+END_VAR
+
+// Interlock logic
+IF BtnManual THEN
+    ManualMode := TRUE;
+    AutoMode := FALSE;
+ELSIF BtnAuto THEN
+    AutoMode := TRUE;
+    ManualMode := FALSE;
+END_IF
+
+// Manual control logic
+IF ManualMode THEN
+    IF CmdClip THEN
+        // Clip from Conveyor A
+    END_IF;
+    IF CmdTransfer THEN
+        // Move to Conveyor B
+    END_IF;
+    IF CmdRelease THEN
+        // Release on Conveyor B
+    END_IF;
+END_IF
+
+// Auto mode trigger
+IF AutoMode AND BtnAuto THEN
+    AutoTrigger := TRUE;
+END_IF
+
+// Auto sequence logic
+IF AutoMode AND AutoTrigger THEN
+    CASE State OF
+        0: 
+            // Clip action
+            State := 1;
+        1:
+            AutoTimer(IN := TRUE, PT := T#2s);
+            IF AutoTimer.Q THEN
+                AutoTimer(IN := FALSE);
+                State := 2;
+            END_IF;
+        2:
+            // Release action
+            AutoTrigger := FALSE;
+            State := 0;
+    END_CASE;
+END_IF
+
+### Generated Code:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text PLC program for a pick-and-place robot with interlocked manual (step-by-step control) and auto (timed sequence) modes, managing conveyor A to B transfers safely.  
+
+*(Key focus: Mode interlocking, manual/auto logic separation, timed auto sequence, and safety.)*
+**Pick-and-Place Application for a Robot Using 61131-3 Structured Text:**
+
+Write a PLC program in structured text (ST) according to IEC 61131-3 standards for a pick-and-place robotic application with two conveyors, following the process described below:
+
+Process Description:
+
+The system operates in two modes: Manual Mode and Auto Mode. These modes are interlocked, meaning only one can be active at any time.
+
+	1.	Manual Mode:
+	•	When the Manual button is pressed, the robotic arm will execute the following steps in response to individual manual commands:
+	•	Clip: Clip the product from conveyor A.
+	•	Transfer: Move the product to conveyor B.
+	•	Release: Release the product onto conveyor B, allowing it to be carried away.
+	2.	Auto Mode:
+	•	When the Auto button is pressed, the robotic arm will execute the entire pick-and-place process automatically:
+	•	Clip: Clip the product from conveyor A and hold it.
+	•	Transfer: Transfer the product to conveyor B (this action takes 2 seconds).
+	•	Release: Release the product onto conveyor B.
+	•	The auto process completes after one cycle, but can be re-triggered by pressing the Auto button again.
+
+The system should ensure that manual and auto modes cannot operate simultaneously, using interlocking logic to prevent conflicts between the two modes.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a PLC programmer responsible for developing a Structured Text (ST) program according to IEC 61131-3 standards. Your goal is to implement control logic for a pick-and-place robotic arm with two operating modes: Manual and Auto, while ensuring interlocks and safe operation.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+🔘 Mode Selection:
+	•	BtnManual: Activates Manual Mode
+	•	BtnAuto: Activates Auto Mode
+	•	Only one mode may be active at a time (interlocked)
+
+🎮 Manual Mode Commands:
+	•	CmdClip: Pick product from Conveyor A
+	•	CmdTransfer: Move product to Conveyor B
+	•	CmdRelease: Drop product on Conveyor B
+
+🤖 Auto Mode Sequence (triggered by Auto button):
+	•	Clip → Transfer (2-second delay) → Release
+	•	Performs one complete cycle per trigger
+
+🚦 Outputs (you define the actions):
+	•	Robot performs tasks as directed by mode-specific logic
+
+⸻
+
+🟧 S (Steps) – What You Need to Do
+	1.	Implement Mode Interlock Logic
+	•	When BtnManual is pressed, activate ManualMode and disable AutoMode.
+	•	When BtnAuto is pressed, activate AutoMode and disable ManualMode.
+	2.	Handle Manual Mode Logic
+	•	Respond to CmdClip, CmdTransfer, and CmdRelease independently.
+	•	Robot should perform only the task issued by the corresponding button.
+	•	No sequence or delay logic is required in manual mode.
+	3.	Handle Auto Mode Logic
+	•	On rising edge of BtnAuto, set AutoTrigger := TRUE.
+	•	Use a state machine to perform:
+	•	State 0: Clip
+	•	State 1: Transfer (wait 2 seconds using a TON timer)
+	•	State 2: Release and reset the sequence
+	4.	Ensure Safety and Robustness
+	•	Reset timers and state machine at the end of each Auto cycle
+	•	Prevent overlapping commands or simultaneous mode activation
+
+⸻
+
+🟦 E (Expectation) – What Success Looks Like
+
+Your final program will:
+	•	Ensure safe, interlocked switching between Manual and Auto modes
+	•	Allow step-by-step control of the robot in Manual mode
+	•	Execute a timed, automated pick-and-place sequence in Auto mode
+	•	Be easily extensible for status indicators, alarms, or cycle counters
+	•	Follow best practices in IEC 61131-3 Structured Text
+
+⸻
+
+✅ Sample Snippet:
+VAR
+    BtnManual, BtnAuto : BOOL;
+    ManualMode, AutoMode, AutoTrigger : BOOL;
+    CmdClip, CmdTransfer, CmdRelease : BOOL;
+    State : INT := 0;
+    AutoTimer : TON;
+END_VAR
+
+// Interlock logic
+IF BtnManual THEN
+    ManualMode := TRUE;
+    AutoMode := FALSE;
+ELSIF BtnAuto THEN
+    AutoMode := TRUE;
+    ManualMode := FALSE;
+END_IF
+
+// Manual control logic
+IF ManualMode THEN
+    IF CmdClip THEN
+        // Clip from Conveyor A
+    END_IF;
+    IF CmdTransfer THEN
+        // Move to Conveyor B
+    END_IF;
+    IF CmdRelease THEN
+        // Release on Conveyor B
+    END_IF;
+END_IF
+
+// Auto mode trigger
+IF AutoMode AND BtnAuto THEN
+    AutoTrigger := TRUE;
+END_IF
+
+// Auto sequence logic
+IF AutoMode AND AutoTrigger THEN
+    CASE State OF
+        0: 
+            // Clip action
+            State := 1;
+        1:
+            AutoTimer(IN := TRUE, PT := T#2s);
+            IF AutoTimer.Q THEN
+                AutoTimer(IN := FALSE);
+                State := 2;
+            END_IF;
+        2:
+            // Release action
+            AutoTrigger := FALSE;
+            State := 0;
+    END_CASE;
+END_IF
+
+// Reset timers and state machine at the end of each Auto cycle
+IF AutoMode AND NOT AutoTrigger THEN
+    AutoTimer(IN := FALSE);
+    State := 0;
+END_IF
+
+**Deliverables:**
+
+1.	A Structured Text (ST) program that implements the required logic for the pick-and-place robotic application.
+2.	A detailed description of the program, including a description of the inputs, outputs, and logic implemented.
+3.	A test plan and test results to demonstrate the correct operation of the program.
+4.	A report on the development process, including any challenges encountered and lessons learned.
+
+**Evaluation Criteria:**
+
+1.	Correctness: The program should implement the required logic for the pick-and-place robotic application, including mode interlock, manual/auto logic separation, timed auto sequence, and safety.
+2.	Readability: The program should be well-structured and easy to understand, following best practices in IEC 61131-3 Structured Text.
+3.	Extensibility: The program should be easily extensible for status indicators, alarms, or cycle counters.
+4.	Documentation: The program should be accompanied by a detailed description of the inputs, outputs, and logic implemented, as well as a test plan and test results.
+5.	Development Process: The report on the development process should include a description of any challenges encountered and lessons learned.
+
+**Resources:**
+
+1.	IEC 61131-3 Standard: https://www.iec.ch/standards/standard/view/61131-3
+2.	Structured Text (ST) Programming Guide: https://www.plctalk.net/downloads/Structured_Text_Programming_Guide.pdf
+3.	PLC Programming Tutorials: https://www.youtube.com/playlist?list=PL0771600000000000
+4.	PLC Programming Forums: https://www.plctalk.net/
+5.	PLC Programming Books: https://www.amazon.com/s?k=plc+programming&ref=nb_sb_noss_2

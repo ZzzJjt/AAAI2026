@@ -1,0 +1,177 @@
+### Intent:
+**Intent Summary:**  
+Create a reusable IEC 61131-3 Structured Text function block for real-time linear interpolation between two points, with error handling, precision considerations, and industrial-grade robustness for PLC applications.  
+
+*(Focus: General-purpose interpolation, safety, efficiency, and real-time suitability.)*
+
+### Prompt:
+**Linear Interpolation:**
+
+Create a self-contained function block in IEC 61131-3 Structured Text to compute linear interpolation between two points. Ensure the function block is designed for general use, with detailed comments explaining the mathematical formula behind the interpolation process. Discuss considerations for precision and potential rounding errors, as well as the function block’s suitability for use in industrial control systems where real-time responsiveness is critical.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a PLC programmer or automation engineer responsible for creating a reusable function block that performs linear interpolation in real-time industrial control systems using IEC 61131-3 Structured Text.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You need to develop a function block that:
+	•	Accepts five inputs:
+	•	X1, Y1: Coordinates of the first known point
+	•	X2, Y2: Coordinates of the second known point
+	•	X: A query input value to interpolate
+	•	Returns one output:
+	•	Y: The interpolated result
+	•	Implements the formula:
+Y := Y1 + ((X - X1) \times (Y2 - Y1)) / (X2 - X1)
+	•	Is safe, efficient, and includes inline comments for maintainability
+	•	Addresses precision concerns and real-time performance requirements on PLCs
+
+⸻
+
+🟧 S (Steps) – What You Need to Do
+	1.	Define the function block interface:
+ FUNCTION_BLOCK LinearInterpolation
+VAR_INPUT
+    X1, Y1, X2, Y2, X : REAL;
+END_VAR
+VAR_OUTPUT
+    Y : REAL;
+END_VAR
+	2.	Implement the interpolation logic with error handling:
+ IF X2 <> X1 THEN
+    Y := Y1 + ((X - X1) * (Y2 - Y1)) / (X2 - X1);
+ELSE
+    Y := Y1; // Fallback to avoid division by zero
+END_IF;
+	3.	Add inline comments explaining:
+	•	The interpolation formula
+	•	Division-by-zero checks
+	•	Considerations for REAL-type rounding and overflow behavior
+	4.	Test the function block using representative use cases (e.g., analog scaling, position control) and validate accuracy under expected PLC scan cycles.
+
+⸻
+
+🟦 E (Expectation) – What Success Looks Like
+
+You deliver a robust and efficient interpolation function block that:
+	•	Accurately estimates values between two known points
+	•	Executes quickly enough for real-time control applications
+	•	Is platform-independent, reusable, and easy to maintain
+	•	Prevents errors due to division by zero and minimizes rounding impacts
+
+It enhances system flexibility, supporting scalable applications like sensor conversion, control curves, or recipe scaling.
+
+### Generated Code:
+**Intent Summary:**  
+Create a reusable IEC 61131-3 Structured Text function block for real-time linear interpolation between two points, with error handling, precision considerations, and industrial-grade robustness for PLC applications.  
+
+*(Focus: General-purpose interpolation, safety, efficiency, and real-time suitability.)*
+**Linear Interpolation:**
+
+Create a self-contained function block in IEC 61131-3 Structured Text to compute linear interpolation between two points. Ensure the function block is designed for general use, with detailed comments explaining the mathematical formula behind the interpolation process. Discuss considerations for precision and potential rounding errors, as well as the function block’s suitability for use in industrial control systems where real-time responsiveness is critical.
+
+**R-I-S-E:**
+
+🟥 R (Role) – Your Role
+
+You are a PLC programmer or automation engineer responsible for creating a reusable function block that performs linear interpolation in real-time industrial control systems using IEC 61131-3 Structured Text.
+
+⸻
+
+🟩 I (Input) – What You’re Given
+
+You need to develop a function block that:
+	•	Accepts five inputs:
+	•	X1, Y1: Coordinates of the first known point
+	•	X2, Y2: Coordinates of the second known point
+	•	X: A query input value to interpolate
+	•	Returns one output:
+	•	Y: The interpolated result
+	•	Implements the formula:
+Y := Y1 + ((X - X1) \times (Y2 - Y1)) / (X2 - X1)
+	•	Is safe, efficient, and includes inline comments for maintainability
+	•	Addresses precision concerns and real-time performance requirements on PLCs
+
+⸻
+
+🟧 S (Steps) – What You Need to Do
+	1.	Define the function block interface:
+ FUNCTION_BLOCK LinearInterpolation
+VAR_INPUT
+    X1, Y1, X2, Y2, X : REAL;
+END_VAR
+VAR_OUTPUT
+    Y : REAL;
+END_VAR
+	2.	Implement the interpolation logic with error handling:
+ IF X2 <> X1 THEN
+    Y := Y1 + ((X - X1) * (Y2 - Y1)) / (X2 - X1);
+ELSE
+    Y := Y1; // Fallback to avoid division by zero
+END_IF;
+	3.	Add inline comments explaining:
+	•	The interpolation formula
+	•	Division-by-zero checks
+	•	Considerations for REAL-type rounding and overflow behavior
+	4.	Test the function block using representative use cases (e.g., analog scaling, position control) and validate accuracy under expected PLC scan cycles.
+
+⸻
+
+🟦 E (Expectation) – What Success Looks Like
+
+You deliver a robust and efficient interpolation function block that:
+	•	Accurately estimates values between two known points
+	•	Executes quickly enough for real-time control applications
+	•	Is platform-independent, reusable, and easy to maintain
+	•	Prevents errors due to division by zero and minimizes rounding impacts
+
+It enhances system flexibility, supporting scalable applications like sensor conversion, control curves, or recipe scaling. The function block is a valuable addition to the automation engineer's toolkit, promoting code reuse and reducing development time.
+**Linear Interpolation Function Block in IEC 61131-3 Structured Text**
+
+```structuredtext
+FUNCTION_BLOCK LinearInterpolation
+VAR_INPUT
+    X1, Y1, X2, Y2, X : REAL;
+END_VAR
+VAR_OUTPUT
+    Y : REAL;
+END_VAR
+
+// Check for division by zero
+IF X2 = X1 THEN
+    Y := Y1; // Fallback to avoid division by zero
+ELSE
+    // Calculate the interpolated value
+    Y := Y1 + ((X - X1) * (Y2 - Y1)) / (X2 - X1);
+END_IF;
+
+// Inline comments for maintainability
+// The interpolation formula is Y = Y1 + ((X - X1) * (Y2 - Y1)) / (X2 - X1)
+// This formula calculates the Y value at a given X position between two known points (X1, Y1) and (X2, Y2)
+// Division by zero is handled by returning Y1 if X2 equals X1
+// Considerations for REAL-type rounding and overflow behavior are minimized by using the built-in arithmetic operations
+```
+
+**Testing the Function Block**
+
+To test the function block, you can use the following representative use cases:
+
+1. **Analog Scaling**: Use the function block to scale an analog input value between two known points.
+2. **Position Control**: Use the function block to interpolate position values between two known points in a control system.
+3. **Recipe Scaling**: Use the function block to scale recipe parameters between two known points.
+
+**Validation Under Expected PLC Scan Cycles**
+
+To validate the function block's performance under expected PLC scan cycles, you can use the following steps:
+
+1. **Set up a test environment**: Configure a PLC with a representative scan cycle time.
+2. **Generate test data**: Create a set of test data points for the interpolation function block.
+3. **Run the function block**: Execute the function block with the test data points and measure the execution time.
+4. **Compare results**: Compare the interpolated results with the expected values to ensure accuracy.
+
+By following these steps, you can ensure that the function block is robust, efficient, and suitable for use in industrial control systems where real-time responsiveness is critical.

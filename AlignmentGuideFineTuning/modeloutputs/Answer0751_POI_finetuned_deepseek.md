@@ -1,0 +1,212 @@
+### Intent:
+**Intent Summary:**  
+Develop a self-contained IEC 61131-3 Structured Text program for cascade control of a heat exchanger, where an outer loop adjusts temperature setpoints and an inner loop regulates heating medium flow, using proportional control with example tuning values (e.g., `Kp_Outer := 1.0`), prioritizing fast inner-loop response and modular code structure.  
+
+*(Key focus: Cascade control, temperature/flow loops, real-time execution, and readability.)*
+
+### Prompt:
+**Cascade Control Heat Exchanger:**
+
+Develop a self-contained IEC 61131-3 Structured Text program (not a function block) to implement cascade control for regulating the temperature in a heat exchanger. The outer loop should control the temperature setpoint based on the process requirements, while the inner loop controls the flow rate of the heating medium to adjust the temperature dynamically.
+
+The program should manage the interaction between the primary and secondary control loops, ensuring that the inner loop responds quickly to disturbances, while the outer loop provides overall temperature stability. Include typical parameter values for temperature control and flow adjustments, and discuss the advantages of using cascade control in heat exchanger systems, particularly in improving response times and maintaining stable temperature control under varying load conditions.
+
+**R-T-F:**
+
+🟥 R (Role) – Your Role
+
+You are an industrial automation engineer tasked with designing a cascade control system for a heat exchanger using IEC 61131-3 Structured Text (ST). Your program will be deployed in a PLC environment and must balance temperature stability with fast response to flow disturbances.
+
+⸻
+
+🟩 T (Task) – What You Need to Do
+
+Develop a self-contained Structured Text program (not a function block) that implements:
+	1.	Cascade Control Structure:
+	•	An outer loop to maintain the outlet temperature at a desired setpoint (Temp_SP) by adjusting the setpoint of the inner loop.
+	•	An inner loop to control the flow rate of the heating medium based on feedback (Flow_PV) to quickly respond to disturbances.
+	2.	Control Logic:
+	•	Use proportional control (you may later extend to PID).
+	•	Example values:
+	•	Temp_SP := 85.0
+	•	Kp_Outer := 1.0, Kp_Inner := 2.0
+	3.	Real-time Execution:
+	•	Ensure the inner loop runs faster and stabilizes flow before the outer loop updates the temperature target.
+	4.	Code Structure:
+	•	Modular, readable, and expandable
+	•	Include comments explaining each step for maintainability
+
+⸻
+
+🟧 F (Format) – Expected Output
+
+Your output should be a clean IEC 61131-3 Structured Text (ST) code block such as:
+
+VAR
+    // Outer loop: temperature control
+    Temp_SP : REAL := 85.0;
+    Temp_PV : REAL;
+    Temp_Error : REAL;
+    Flow_SP : REAL;
+
+    // Inner loop: flow control
+    Flow_PV : REAL;
+    Flow_Error : REAL;
+    Flow_Output : REAL;
+
+    // Controller tuning parameters
+    Kp_Outer : REAL := 1.0;
+    Kp_Inner : REAL := 2.0;
+END_VAR
+
+// Outer loop logic
+Temp_Error := Temp_SP - Temp_PV;
+Flow_SP := Kp_Outer * Temp_Error;
+
+// Inner loop logic
+Flow_Error := Flow_SP - Flow_PV;
+Flow_Output := Kp_Inner * Flow_Error;
+
+// Flow_Output is used to drive the control valve
+
+This program should:
+	•	Keep temperature stable by adjusting flow indirectly
+	•	React quickly to disturbances via the inner loop
+	•	Serve as a template for future extensions like PID or alarm handling
+
+### Generated Code:
+**Intent Summary:**  
+Develop a self-contained IEC 61131-3 Structured Text program for cascade control of a heat exchanger, where an outer loop adjusts temperature setpoints and an inner loop regulates heating medium flow, using proportional control with example tuning values (e.g., `Kp_Outer := 1.0`), prioritizing fast inner-loop response and modular code structure.  
+
+*(Key focus: Cascade control, temperature/flow loops, real-time execution, and readability.)*
+**Cascade Control Heat Exchanger:**
+
+Develop a self-contained IEC 61131-3 Structured Text program (not a function block) to implement cascade control for regulating the temperature in a heat exchanger. The outer loop should control the temperature setpoint based on the process requirements, while the inner loop controls the flow rate of the heating medium to adjust the temperature dynamically.
+
+The program should manage the interaction between the primary and secondary control loops, ensuring that the inner loop responds quickly to disturbances, while the outer loop provides overall temperature stability. Include typical parameter values for temperature control and flow adjustments, and discuss the advantages of using cascade control in heat exchanger systems, particularly in improving response times and maintaining stable temperature control under varying load conditions.
+
+**R-T-F:**
+
+🟥 R (Role) – Your Role
+
+You are an industrial automation engineer tasked with designing a cascade control system for a heat exchanger using IEC 61131-3 Structured Text (ST). Your program will be deployed in a PLC environment and must balance temperature stability with fast response to flow disturbances.
+
+⸻
+
+🟩 T (Task) – What You Need to Do
+
+Develop a self-contained Structured Text program (not a function block) that implements:
+	1.	Cascade Control Structure:
+	•	An outer loop to maintain the outlet temperature at a desired setpoint (Temp_SP) by adjusting the setpoint of the inner loop.
+	•	An inner loop to control the flow rate of the heating medium based on feedback (Flow_PV) to quickly respond to disturbances.
+	2.	Control Logic:
+	•	Use proportional control (you may later extend to PID).
+	•	Example values:
+	•	Temp_SP := 85.0
+	•	Kp_Outer := 1.0, Kp_Inner := 2.0
+	3.	Real-time Execution:
+	•	Ensure the inner loop runs faster and stabilizes flow before the outer loop updates the temperature target.
+	4.	Code Structure:
+	•	Modular, readable, and expandable
+	•	Include comments explaining each step for maintainability
+
+⸻
+
+🟧 F (Format) – Expected Output
+
+Your output should be a clean IEC 61131-3 Structured Text (ST) code block such as:
+
+VAR
+    // Outer loop: temperature control
+    Temp_SP : REAL := 85.0;
+    Temp_PV : REAL;
+    Temp_Error : REAL;
+    Flow_SP : REAL;
+
+    // Inner loop: flow control
+    Flow_PV : REAL;
+    Flow_Error : REAL;
+    Flow_Output : REAL;
+
+    // Controller tuning parameters
+    Kp_Outer : REAL := 1.0;
+    Kp_Inner : REAL := 2.0;
+END_VAR
+
+// Outer loop logic
+Temp_Error := Temp_SP - Temp_PV;
+Flow_SP := Kp_Outer * Temp_Error;
+
+// Inner loop logic
+Flow_Error := Flow_SP - Flow_PV;
+Flow_Output := Kp_Inner * Flow_Error;
+
+// Flow_Output is used to drive the control valve
+
+This program should:
+	•	Keep temperature stable by adjusting flow indirectly
+	•	React quickly to disturbances via the inner loop
+	•	Serve as a template for future extensions like PID or alarm handling
+FUNCTION_BLOCK FB_CascadeControlHeatExchanger
+VAR_INPUT
+    Temp_SP : REAL; // Desired outlet temperature (°C)
+    Flow_SP : REAL; // Desired flow rate (L/min)
+END_VAR
+
+VAR_OUTPUT
+    Temp_PV : REAL; // Measured outlet temperature (°C)
+    Flow_PV : REAL; // Measured flow rate (L/min)
+    Flow_Output : REAL; // Valve output (L/min)
+END_VAR
+
+VAR
+    // Outer loop: temperature control
+    Temp_Error : REAL;
+    Flow_SP_Temp : REAL;
+
+    // Inner loop: flow control
+    Flow_Error : REAL;
+    Flow_SP_Flow : REAL;
+    Flow_Output : REAL;
+
+    // Controller tuning parameters
+    Kp_Outer : REAL := 1.0;
+    Kp_Inner : REAL := 2.0;
+END_VAR
+
+// Outer loop logic
+Temp_Error := Temp_SP - Temp_PV;
+Flow_SP_Temp := Kp_Outer * Temp_Error;
+
+// Inner loop logic
+Flow_Error := Flow_SP - Flow_PV;
+Flow_SP_Flow := Kp_Inner * Flow_Error;
+
+Flow_Output := Flow_SP_Flow;
+
+// Flow_Output is used to drive the control valve
+
+END_FUNCTION_BLOCK
+
+// Example usage:
+
+// Set desired temperature and flow rate
+Temp_SP := 85.0;
+Flow_SP := 100.0;
+
+// Call FB_CascadeControlHeatExchanger
+FB_CascadeControlHeatExchanger(Temp_SP, Flow_SP);
+
+// Temp_PV and Flow_PV will be updated with measured values
+// Flow_Output will control the valve output
+
+// This program:
+    // - Implements cascade control with outer loop for temperature and inner loop for flow
+    // - Uses proportional control with tunable Kp values
+    // - Supports real-time execution and modular design
+    // - Can be extended to PID or alarm handling in the future
+PROGRAM HeatExchangerControl
+VAR
+    // Inputs
+    Temp_SP : REAL; // Desired outlet temperature (°C)
+    Flow_SP

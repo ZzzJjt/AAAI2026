@@ -1,0 +1,121 @@
+### Intent:
+**Intent Summary:**  
+Implement an iterative heapsort function block in IEC 61131-3 Structured Text to sort integer arrays in-place without recursion or `DOWNTO` loops, ensuring PLC-compatible efficiency and clear status outputs.  
+
+*(Focus: Standards-compliant, scan-cycle-safe sorting for industrial automation.)*
+
+### Prompt:
+**Heapsort:**
+Implement a self-contained function block in IEC 61131-3 structured text to perform the heapsort algorithm on an array of integers without using recursion or the ‘DOWNTO’ keyword in loops. Ensure efficient heap construction and sorting.
+
+**T-A-G:**
+
+🟥 T (Task)
+
+Implement a self-contained function block in IEC 61131-3 Structured Text that performs the heapsort algorithm on an array of integers.
+
+⸻
+
+🟩 A (Action)
+	•	Design the function block to sort an integer array in place, without requiring additional memory.
+	•	Use iterative loops only — avoid recursion to ensure scan-cycle compatibility.
+	•	Replace any use of the DOWNTO keyword with ascending loops and calculated index logic.
+	•	Implement two main phases:
+	1.	Heap construction: convert the array into a valid max-heap.
+	2.	Sorting: repeatedly extract the largest element, swap, and restore the heap property.
+	•	Include status outputs like Done : BOOL and clearly comment the heapify logic, loop flow, and index tracking.
+
+⸻
+
+🟦 G (Goal)
+
+Deliver a reliable, efficient, and standards-compliant sorting block that integrates seamlessly into PLC projects. The function block should execute safely under typical PLC scan cycles, respect IEC 61131-3 syntax limitations, and be easily reusable in any sorting-related automation task.
+
+### Generated Code:
+**Intent Summary:**  
+Implement an iterative heapsort function block in IEC 61131-3 Structured Text to sort integer arrays in-place without recursion or `DOWNTO` loops, ensuring PLC-compatible efficiency and clear status outputs.  
+
+*(Focus: Standards-compliant, scan-cycle-safe sorting for industrial automation.)*
+**Heapsort:**
+Implement a self-contained function block in IEC 61131-3 structured text to perform the heapsort algorithm on an array of integers without using recursion or the ‘DOWNTO’ keyword in loops. Ensure efficient heap construction and sorting.
+
+**T-A-G:**
+
+🟥 T (Task)
+
+Implement a self-contained function block in IEC 61131-3 Structured Text that performs the heapsort algorithm on an array of integers.
+
+⸻
+
+🟩 A (Action)
+	•	Design the function block to sort an integer array in place, without requiring additional memory.
+	•	Use iterative loops only — avoid recursion to ensure scan-cycle compatibility.
+	•	Replace any use of the DOWNTO keyword with ascending loops and calculated index logic.
+	•	Implement two main phases:
+	1.	Heap construction: convert the array into a valid max-heap.
+	2.	Sorting: repeatedly extract the largest element, swap, and restore the heap property.
+	•	Include status outputs like Done : BOOL and clearly comment the heapify logic, loop flow, and index tracking.
+
+⸻
+
+🟦 G (Goal)
+
+Deliver a reliable, efficient, and standards-compliant sorting block that integrates seamlessly into PLC projects. The function block should execute safely under typical PLC scan cycles, respect IEC 61131-3 syntax limitations, and be easily reusable in any sorting-related automation task.
+
+---
+
+**Function Block Heapsort:**
+
+```
+FUNCTION_BLOCK Heapsort
+  VAR_INPUT
+    InputArray: ARRAY[1..N] OF INT;
+    SwapOutput: BOOL;
+  END_VAR
+
+  VAR_OUTPUT
+    SortedArray: ARRAY[1..N] OF INT;
+    Done: BOOL;
+  END_VAR
+
+  VAR
+    HeapSize: INT;
+    ParentIndex, ChildIndex1, ChildIndex2: INT;
+    Temp: INT;
+  END_VAR
+
+  HeapSize := N;
+  FOR i := FLOOR(HeapSize / 2) TO 1 STEP -1 DO
+    Heapify(i);
+  END_FOR;
+
+  Done := FALSE;
+  WHILE NOT Done AND HeapSize > 1 DO
+    SwapOutput := SortedArray[1] WITH Temp;
+    SortedArray[1] := SortedArray[HeapSize];
+    SortedArray[HeapSize] := Temp;
+    HeapSize := HeapSize - 1;
+    Heapify(1);
+  END_WHILE;
+
+  SortedArray[1..HeapSize] := InputArray[1..HeapSize];
+  Done := TRUE;
+END_FUNCTION_BLOCK
+
+FUNCTION Heapify
+  VAR
+    ParentIndex, LeftChildIndex, RightChildIndex, MaxIndex: INT;
+  END_VAR
+
+  ParentIndex := i;
+  LeftChildIndex := 2 * ParentIndex;
+  WHILE LeftChildIndex <= HeapSize DO
+    IF (LeftChildIndex < HeapSize AND SortedArray[LeftChildIndex] < SortedArray[LeftChildIndex + 1]) THEN
+      LeftChildIndex := LeftChildIndex + 1;
+    END_IF;
+    IF (SortedArray[ParentIndex] < SortedArray[LeftChildIndex]) THEN
+      MaxIndex := LeftChildIndex;
+    END_IF;
+    RightChildIndex := 2 * ParentIndex + 2;
+    IF (RightChildIndex <= HeapSize AND SortedArray[RightChildIndex] > SortedArray[MaxIndex]) THEN
+      MaxIndex := RightChildIndex;

@@ -1,0 +1,185 @@
+### Intent:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program for cascade control in an oil refinery, where an outer pressure loop sets the flow setpoint for an inner flow loop, using proportional control with practical gains (e.g., 1.2 for pressure, 2.5 for flow) to ensure rapid disturbance rejection and process stability.  
+
+*(Key focus: Cascade architecture, proportional control, real-time PLC deployment, and clear loop separation.)*
+
+### Prompt:
+**Cascade Control Oil Refinery:**
+
+Develop a self-contained IEC 61131-3 Structured Text program (not a function block) to implement cascade control for pressure regulation in an oil refinery vessel. The primary loop should control the vessel pressure, adjusting the pressure setpoint based on the process requirements. The secondary loop controls the flow of oil into the vessel, with the output of the primary loop serving as the setpoint for the secondary loop.
+
+Ensure that the program manages the interaction between the two control loops, allowing the inner loop (oil flow control) to respond rapidly to changes in flow while the outer loop (pressure control) maintains overall process stability. Include typical parameter values for pressure and flow control, and discuss the benefits of cascade control in oil refinery operations, particularly for improving response time and process stability in systems with large disturbances.
+
+**R-T-F:**
+
+🟥 R (Role) – Your Role
+
+You are a control systems engineer responsible for developing an IEC 61131-3 Structured Text program to manage pressure regulation in an oil refinery vessel using cascade control architecture.
+
+⸻
+
+🟩 T (Task) – What You Need to Do
+
+Develop a self-contained Structured Text program (not a function block) that implements:
+	1.	Cascade Control Structure:
+	•	Primary (outer) loop: Controls the vessel pressure by generating a flow setpoint.
+	•	Secondary (inner) loop: Controls the oil inflow rate using the flow setpoint from the outer loop.
+	2.	Control Logic:
+	•	Use proportional control in both loops for simplicity.
+	•	Assign practical values:
+	•	Pressure setpoint: Pressure_SP := 12.0 (bar)
+	•	Gains: Kp_Outer := 1.2, Kp_Inner := 2.5
+	3.	Execution Strategy:
+	•	The inner loop must respond faster than the outer loop to disturbances.
+	•	Ensure the program is structured, readable, and suitable for real-time PLC deployment.
+
+⸻
+
+🟧 F (Format) – Expected Output
+
+You should provide a clean, modular Structured Text code block like the following:
+VAR
+    // Outer loop (pressure control)
+    Pressure_SP : REAL := 12.0;
+    Pressure_PV : REAL;
+    Pressure_Error : REAL;
+    Flow_SP : REAL;
+
+    // Inner loop (flow control)
+    Flow_PV : REAL;
+    Flow_Error : REAL;
+    Flow_Output : REAL;
+
+    // Proportional gains
+    Kp_Outer : REAL := 1.2;
+    Kp_Inner : REAL := 2.5;
+END_VAR
+
+// Outer loop logic: pressure control
+Pressure_Error := Pressure_SP - Pressure_PV;
+Flow_SP := Kp_Outer * Pressure_Error;
+
+// Inner loop logic: flow control
+Flow_Error := Flow_SP - Flow_PV;
+Flow_Output := Kp_Inner * Flow_Error;
+
+// Flow_Output drives the oil flow actuator (e.g., valve or pump)
+
+This format ensures:
+	•	Fast response to oil inflow fluctuations
+	•	Stable control of vessel pressure
+	•	Code ready for real-world PLC integration with clear separation of control layers
+
+### Generated Code:
+**Intent Summary:**  
+Develop an IEC 61131-3 Structured Text program for cascade control in an oil refinery, where an outer pressure loop sets the flow setpoint for an inner flow loop, using proportional control with practical gains (e.g., 1.2 for pressure, 2.5 for flow) to ensure rapid disturbance rejection and process stability.  
+
+*(Key focus: Cascade architecture, proportional control, real-time PLC deployment, and clear loop separation.)*
+**Cascade Control Oil Refinery:**
+
+Develop a self-contained IEC 61131-3 Structured Text program (not a function block) to implement cascade control for pressure regulation in an oil refinery vessel. The primary loop should control the vessel pressure, adjusting the pressure setpoint based on the process requirements. The secondary loop controls the flow of oil into the vessel, with the output of the primary loop serving as the setpoint for the secondary loop.
+
+Ensure that the program manages the interaction between the two control loops, allowing the inner loop (oil flow control) to respond rapidly to changes in flow while the outer loop (pressure control) maintains overall process stability. Include typical parameter values for pressure and flow control, and discuss the benefits of cascade control in oil refinery operations, particularly for improving response time and process stability in systems with large disturbances.
+
+**R-T-F:**
+
+🟥 R (Role) – Your Role
+
+You are a control systems engineer responsible for developing an IEC 61131-3 Structured Text program to manage pressure regulation in an oil refinery vessel using cascade control architecture.
+
+⸻
+
+🟩 T (Task) – What You Need to Do
+
+Develop a self-contained Structured Text program (not a function block) that implements:
+	1.	Cascade Control Structure:
+	•	Primary (outer) loop: Controls the vessel pressure by generating a flow setpoint.
+	•	Secondary (inner) loop: Controls the oil inflow rate using the flow setpoint from the outer loop.
+	2.	Control Logic:
+	•	Use proportional control in both loops for simplicity.
+	•	Assign practical values:
+	•	Pressure setpoint: Pressure_SP := 12.0 (bar)
+	•	Gains: Kp_Outer := 1.2, Kp_Inner := 2.5
+	3.	Execution Strategy:
+	•	The inner loop must respond faster than the outer loop to disturbances.
+	•	Ensure the program is structured, readable, and suitable for real-time PLC deployment.
+
+⸻
+
+🟧 F (Format) – Expected Output
+
+You should provide a clean, modular Structured Text code block like the following:
+VAR
+    // Outer loop (pressure control)
+    Pressure_SP : REAL := 12.0;
+    Pressure_PV : REAL;
+    Pressure_Error : REAL;
+    Flow_SP : REAL;
+
+    // Inner loop (flow control)
+    Flow_PV : REAL;
+    Flow_Error : REAL;
+    Flow_Output : REAL;
+
+    // Proportional gains
+    Kp_Outer : REAL := 1.2;
+    Kp_Inner : REAL := 2.5;
+END_VAR
+
+// Outer loop logic: pressure control
+Pressure_Error := Pressure_SP - Pressure_PV;
+Flow_SP := Kp_Outer * Pressure_Error;
+
+// Inner loop logic: flow control
+Flow_Error := Flow_SP - Flow_PV;
+Flow_Output := Kp_Inner * Flow_Error;
+
+// Flow_Output drives the oil flow actuator (e.g., valve or pump)
+
+This format ensures:
+	•	Fast response to oil inflow fluctuations
+	•	Stable control of vessel pressure
+	•	Code ready for real-world PLC integration with clear separation of control layers
+
+⸻
+
+✅ Example Result
+
+Pressure_SP := 12.0
+Pressure_PV := 11.5
+Flow_SP := 1.2
+Flow_PV := 0.95
+Flow_Error := 0.25
+Flow_Output := 0.5625
+
+// Flow_Output drives oil inflow valve or pump
+
+This output ensures:
+	•	The inner loop responds to real-time flow changes
+	•	The outer loop maintains stable pressure at 12.0 bar
+	•	The system is ready for deployment in a PLC environment
+(* IEC 61131-3 Structured Text Program: CascadeControl.st *)
+(* Purpose: Implements cascade control for oil refinery vessel pressure regulation *)
+
+PROGRAM CascadeControl
+VAR
+    (* Inputs *)
+    Pressure_PV : REAL;                 (* Measured vessel pressure [bar] *)
+    Flow_PV : REAL;                     (* Measured oil inflow rate [m³/h] *)
+    Pressure_SP : REAL := 12.0;         (* Desired pressure setpoint [bar] *)
+    Flow_SP : REAL := 1000.0;           (* Desired flow setpoint [m³/h] *)
+    
+    (* Outputs *)
+    Flow_Output : REAL;                 (* Control signal to oil inflow valve *)
+    Pressure_Error : REAL;              (* Outer loop error: Pressure_SP - Pressure_PV *)
+    Flow_Error : REAL;                  (* Inner loop error: Flow_SP - Flow_PV *)
+    
+    (* Control Parameters *)
+    Kp_Outer : REAL := 1.2;             (* Proportional gain for outer loop *)
+    Kp_Inner : REAL := 2.5;             (* Proportional gain for inner loop *)
+    
+    (* Internal Variables *)
+    Last_Flow_PV : REAL;                (* For anti-windup in inner loop *)
+    Last_Pressure_PV : REAL;            (* For anti-windup in outer loop *)
+END_VAR

@@ -1,0 +1,117 @@
+### Intent:
+**Intent Summary:**  
+The task involves automating urea synthesis by controlling valve operations, monitoring reactor pressure and temperature, and managing reaction timing using a state machine with safety checks and emergency handling.
+
+### Prompt:
+**Explanation PID Function Block:**
+Provide a comprehensive explanation of the inputs and outputs of the PID function block in the OSCAT library, including the role of each parameter in process control and examples of practical implementation in industrial applications.
+
+**T-A-G:**
+
+🟥 T (Task) – What You Need to Do
+
+Explain the function and structure of the PID function block in the OSCAT library, including its inputs, outputs, and how it is practically used for process control in industrial applications.
+
+⸻
+
+🟩 A (Action) – How It Works
+	1.	Inputs:
+	•	SP (Setpoint): The desired target value of the process (e.g., 75°C).
+	•	PV (Process Variable): The actual measured value (e.g., current temperature).
+	•	Kp, Ki, Kd: Tuning constants that define proportional, integral, and derivative behavior.
+	•	Optional: MANUAL mode for overriding automatic control, and LIMIT_HI / LIMIT_LO for output clamping.
+	2.	Processing:
+	•	Computes Error := SP - PV.
+	•	Calculates:
+	•	Proportional Term: Kp * error
+	•	Integral Term: Ki * ∫ error dt (to remove steady-state offset)
+	•	Derivative Term: Kd * d(error)/dt (to dampen sudden changes)
+	•	Combines these to form the control signal (OUT), with output limiting and anti-windup protection.
+	3.	Outputs:
+	•	OUT: The control signal to the actuator (e.g., valve position, motor speed).
+	•	ERROR: Real-time deviation between SP and PV.
+	•	Status flags: Such as saturation indicators (if limits are reached).
+
+⸻
+
+🟦 G (Goal) – What You Achieve
+
+By using the OSCAT PID function block, you can:
+	•	Maintain stable and accurate control over critical process parameters like pressure, temperature, or flow.
+	•	Optimize process performance through real-time corrections.
+	•	Reduce manual tuning and improve fault resilience with built-in saturation and mode-handling features.
+	•	Apply PID logic to a wide variety of automation scenarios, from chemical dosing to speed regulation and HVAC systems.
+
+### Generated Code:
+**Intent Summary:**  
+The task involves automating urea synthesis by controlling valve operations, monitoring reactor pressure and temperature, and managing reaction timing using a state machine with safety checks and emergency handling.
+**Explanation PID Function Block:**
+Provide a comprehensive explanation of the inputs and outputs of the PID function block in the OSCAT library, including the role of each parameter in process control and examples of practical implementation in industrial applications.
+
+**T-A-G:**
+
+🟥 T (Task) – What You Need to Do
+
+Explain the function and structure of the PID function block in the OSCAT library, including its inputs, outputs, and how it is practically used for process control in industrial applications.
+
+⸻
+
+🟩 A (Action) – How It Works
+	1.	Inputs:
+	•	SP (Setpoint): The desired target value of the process (e.g., 75°C).
+	•	PV (Process Variable): The actual measured value (e.g., current temperature).
+	•	Kp, Ki, Kd: Tuning constants that define proportional, integral, and derivative behavior.
+	•	Optional: MANUAL mode for overriding automatic control, and LIMIT_HI / LIMIT_LO for output clamping.
+	2.	Processing:
+	•	Computes Error := SP - PV.
+	•	Calculates:
+	•	Proportional Term: Kp * error
+	•	Integral Term: Ki * ∫ error dt (to remove steady-state offset)
+	•	Derivative Term: Kd * d(error)/dt (to dampen sudden changes)
+	•	Combines these to form the control signal (OUT), with output limiting and anti-windup protection.
+	3.	Outputs:
+	•	OUT: The control signal to the actuator (e.g., valve position, motor speed).
+	•	ERROR: Real-time deviation between SP and PV.
+	•	Status flags: Such as saturation indicators (if limits are reached).
+
+⸻
+
+🟦 G (Goal) – What You Achieve
+
+By using the OSCAT PID function block, you can:
+	•	Maintain stable and accurate control over critical process parameters like pressure, temperature, or flow.
+	•	Optimize process performance through real-time corrections.
+	•	Reduce manual tuning and improve fault resilience with built-in saturation and mode-handling features.
+	•	Apply PID logic to a wide variety of automation scenarios, from chemical dosing to speed regulation and HVAC systems.
+(* IEC 61131-3 Structured Text Program for Urea Synthesis Control *)
+(* Implements a state machine with valve control, pressure/temperature monitoring, and timing *)
+(* Uses a timer to manage reaction timing and emergency handling *)
+(* Includes safety checks and fault handling for pressure/temperature limits *)
+
+PROGRAM UreaSynthesisControl
+VAR
+    (* Inputs *)
+    StartButton : BOOL;                  (* Start button input *)
+    StopButton : BOOL;                   (* Stop button input *)
+    EmergencyStop : BOOL;                (* Emergency stop input *)
+    PressureSensor : REAL;               (* Reactor pressure sensor, bar *)
+    TemperatureSensor : REAL;            (* Reactor temperature sensor, °C *)
+    
+    (* Outputs *)
+    UreaSynthesisActive : BOOL;          (* TRUE when synthesis is active *)
+    Valve1Open : BOOL;                   (* TRUE to open urea synthesis valve *)
+    Valve2Open : BOOL;                   (* TRUE to open CO2 valve *)
+    Valve3Open : BOOL;                   (* TRUE to open NH3 valve *)
+    Valve4Open : BOOL;                   (* TRUE to open water valve *)
+    Valve5Open : BOOL;                   (* TRUE to open urea outlet valve *)
+    SynthesisComplete : BOOL;            (* TRUE when synthesis completes *)
+    EmergencyStopped : BOOL;             (* TRUE when emergency stop is triggered *)
+    
+    (* Internal Variables *)
+    CurrentState : INT := 0;             (* Current state: 0=Idle, 1=Prepare, 2=React, 3=Complete *)
+    TargetPressure : REAL := 180.0;      (* Target reactor pressure, bar *)
+    TargetTemperature : REAL := 180.0;   (* Target reactor temperature, °C *)
+    ReactionTimer : TON;                 (* Timer for reaction timing *)
+    ReactionStartTime : TIME;            (* Time when reaction starts *)
+    ReactionDuration : TIME;             (* Expected reaction duration *)
+    ReactionComplete : BOOL;             (* TRUE
